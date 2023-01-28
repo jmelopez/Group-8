@@ -1,0 +1,46 @@
+
+/* CSS reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+      
+/* Fixed width container class that will "auto-center" itself */
+.container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.content {
+	padding: 50px 30px;
+}
+
+.header {
+	text-align: end;
+	color: red;
+	text-shadow: 1px 1px 2px #008f44;
+}
+
+.errors {
+	color: red;
+}
+
+.log-head {
+	padding-right: 70px;
+}
+
+.form {
+	border: 5px solid #008f44;
+	color: #008f44;
+	padding: 20px 20px;
+}
+
+.btn {
+	margin-top: 20px;
+}
+
+a {
+	color: red;
+	text-shadow: none;
+}
