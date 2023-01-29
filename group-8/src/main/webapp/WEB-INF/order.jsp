@@ -35,12 +35,16 @@
 		
 		<div class="content">
 			<h1>Order Page</h1>
-			<h4>Order Details:</h4>
 			
-			<c:out value="${order.getCrust()}"></c:out>
-			<c:out value="${order.getDeliveryMethod()}"></c:out>
-			<c:out value="${order.getQuantity()}"></c:out>
-			<c:out value="${order.getSize()}"></c:out>
+			<h4>Order Details:</h4>
+			<span class="d-md-table p-2 bd-highlight">Delivery Method: <c:out value="${order.getDeliveryMethod()}"></c:out></span>
+			<span class="d-sm-table p-2 bd-highlight">Crust: <c:out value="${order.getCrust()}"></c:out></span>
+			<span class="d-lg-table p-2 bd-highlight">QTY: <c:out value="${order.getQuantity()}"></c:out></span>
+			<span class="d-xl-table p-2 bd-highlight">Size: <c:out value="${order.getSize()}"></c:out></span>
+
+			
+			
+			
 		</div>
 	</div>
 </body>
