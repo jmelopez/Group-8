@@ -29,7 +29,7 @@
 				aria-label="Basic button group">
 				<a href="/home" class="btn btn-primary">Home</a> 
 				<a href="/order" class="btn btn-outline-primary">Order</a> 
-				<a href="/account" class="btn btn-outline-primary">Account</a> 
+				<a href="/account/${user.id}" class="btn btn-outline-primary">Account</a> 
 				<a href="/logout" class="btn btn-outline-primary">Logout</a>
 			</div>
 		</nav>

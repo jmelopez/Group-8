@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.java.group8.models.LoginUser;
@@ -85,8 +86,8 @@ public class MainController {
 		return "home.jsp";
 	}
 	
-	@GetMapping("/account")
-	public String account(HttpSession session, Model model) {
+	@GetMapping("/account/{id}")
+	public String account(@PathVariable Long id, Model model, HttpSession session) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
 			return "error.jsp";
