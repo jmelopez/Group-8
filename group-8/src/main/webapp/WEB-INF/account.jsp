@@ -29,60 +29,68 @@
 				aria-label="Basic button group">
 				<a href="/home" class="btn btn-outline-primary">Home</a> <a
 					href="/order" class="btn btn-outline-primary">Order</a> <a
-					href="/account" class="btn btn-primary">Account</a> <a
+					href="#" class="btn btn-primary">Account</a> <a
 					href="/logout" class="btn btn-outline-primary">Logout</a>
 			</div>
 		</nav>
 		<div class="content">
-			<div
-				class="d-flex flex-row bd-highlight justify-content-between text-center p-3">
+			<div class="d-flex flex-row bd-highlight justify-content-between text-center p-3">
 				<div class="flex-grow-1 p-3">
 					<h1>Account Info</h1>
-					<form:form action="/account/${user.id}" method="POST"
-						modelAttribute="user">
+					<form:form action="/account/${user.id}/edit" method="POST" modelAttribute="user">
 						<input type="hidden" name="_method" value="put">
 
 						<div class="row mb-3">
-							<label for="inputEmail3" class="col-sm-2 col-form-label">First
-								Name</label>
-								
+							<label class="col-sm-2 col-form-label">First Name</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" placeholder="${user.firstName}">
+								<form:input path="firstName" type="text" class="form-control"></form:input>
+								<form:errors path="firstName" />
 							</div>
 						</div>
 
 						<div class="row mb-3">
 							<label class="col-sm-2 col-form-label">Last Name</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control"  placeholder="${user.lastName}">
+								<form:input path="lastName" type="text" class="form-control"></form:input>
+								<form:errors path="lastName" />
 							</div>
 						</div>
 
 						<div class="row mb-3">
 							<label class="col-sm-2 col-form-label">Email</label>
 							<div class="col-sm-10">
-								<input type="email" class="form-control"  placeholder="${user.email}">
+								<form:input path="email" type="email" class="form-control"></form:input>
+								<form:errors path="email" />
 							</div>
 						</div>
 
 						<div class="row mb-3">
 							<label class="col-sm-2 col-form-label">Address</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control"  placeholder="${user.address}">
+								<form:input path="address" type="text" class="form-control"></form:input>
+								<form:errors path="address" />
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label class="col-sm-2 col-form-label">Zip Code</label>
+							<div class="col-sm-10">
+								<form:input path="zipcode" type="number" class="form-control"></form:input>
+								<form:errors path="zipcode" />
 							</div>
 						</div>
 
 						<div class="row mb-3">
 							<label class="col-sm-2 col-form-label">City</label>
 							<div class="col-sm-7">
-								<input type="text" class="form-control"  placeholder="${user.city}">
-
+								<form:input path="city" type="text" class="form-control"></form:input>
+								<form:errors path="city" />
 							</div>
 							<form:label path="state" class="col-sm-1 col-form-label fw-bold">State:</form:label>
 							<div class="col-sm-2">
 								<form:select class="form-select form-select-sm" path="state">
-
-									<form:option value="NONE"> -- </form:option>
+								<form:errors path="state" />
+									<form:option value="${user.state}"> ${user.state}</form:option>
 									<form:option value="AL"> AL </form:option>
 									<form:option value="AK"> AK </form:option>
 									<form:option value="AZ"> AZ </form:option>
@@ -134,10 +142,12 @@
 							</div>
 						</div>
 
+						<form:input type="hidden" path="password" value="${user.password}" />
+
+
 						<input type="submit" class="btn btn-primary col-6" value="Update" />
 					</form:form>
 				</div>
-
 				<div class="flex-grow-1 p-3">
 					<h1>Past Orders</h1>
 					<table class="table">
