@@ -25,7 +25,6 @@
 	<div class="contatiner">
 		<nav class="navbar navbar-light bg-light p-3">
 			<h1 class="">Pizza Pete's</h1>
-			<h4>Welcome <c:out value="${user.firstName}"></c:out></h4>
 			<div class="btn-group btn-group-lg" role="group"
 				aria-label="Basic button group">
 				<a href="/home" class="btn btn-primary">Home</a> 
