@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Home</title>
+<title>Order</title>
 
 <!-- for Bootstrap CSS -->
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
@@ -25,42 +25,17 @@
 	<div class="contatiner">
 		<nav class="navbar navbar-light bg-light p-3">
 			<h1 class="">Pizza Pete's</h1>
-			<div class="btn-group btn-group-lg" role="group"
-				aria-label="Basic button group">
-				<a href="/home" class="btn btn-primary">Home</a> 
-				<a href="/order" class="btn btn-outline-primary">Order</a> 
-				<a href="/account/${user.id}" class="btn btn-outline-primary">Account</a> 
+			<div class="btn-group btn-group-lg" role="group" aria-label="Basic button group">
+				<a href="/home" class="btn btn-outline-primary">Home</a>
+				<a href="/order" class="btn btn-primary">Order</a>
+				<a href="/account/${user.id}" class="btn btn-outline-primary">Account</a>
 				<a href="/logout" class="btn btn-outline-primary">Logout</a>
 			</div>
 		</nav>
-
+		
 		<div class="content">
-			<h2 class="text-center">Quick Options</h2>
-			<div class="d-flex flex-row bd-highlight justify-content-between text-center p-3">
-
-				<div class="card p-3">
-	
-					<div class="card-body">
-						<p class="card-text">Empty card</p>
-						<a href="/craftapizza" class="btn btn-primary">NEW ORDER</a>
-					</div>
-				</div>
-				<div class="card p-3">
-
-					<div class="card-body">
-						<p class="card-text">Empty card</p>
-						<a href="#" class="btn btn-primary">RE-ORDER MY FAVE</a>
-					</div>
-				</div>
-				<div class="card p-3">
-
-					<div class="card-body">
-						<p class="card-text">Empty card</p>
-						<a href="#" class="btn btn-primary">SURPRISE ME</a>
-					</div>
-				</div>
-			</div>
-			</div>
+			<h1>Order Page</h1>
 		</div>
+	</div>
 </body>
 </html>
