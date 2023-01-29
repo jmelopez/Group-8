@@ -84,4 +84,37 @@ public class MainController {
 		}
 		return "home.jsp";
 	}
+	
+	@GetMapping("/account")
+	public String account(HttpSession session, Model model) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		return "account.jsp";
+	}
+	
+	@GetMapping("/order")
+	public String order(HttpSession session, Model model) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		return "order.jsp";
+	}
+	
+	@GetMapping("/craftapizza")
+	public String craftPizza(HttpSession session, Model model) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		return "craftapizza.jsp";
+	}
 }
