@@ -119,6 +119,7 @@
 									<form:option value="MN"> MN </form:option>
 									<form:option value="MS"> MS </form:option>
 									<form:option value="MO"> MO </form:option>
+									<form:option value="MO"> NY </form:option>
 									<form:option value="OH"> OH </form:option>
 									<form:option value="OK"> OK </form:option>
 									<form:option value="OR"> OR </form:option>
