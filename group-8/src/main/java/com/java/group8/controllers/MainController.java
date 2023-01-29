@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.java.group8.models.LoginUser;
 import com.java.group8.models.User;
@@ -83,5 +85,55 @@ public class MainController {
 			model.addAttribute("user", userServ.getById(uid));
 		}
 		return "home.jsp";
+	}
+	
+	@GetMapping("/account/{id}")
+	public String account(@PathVariable Long id, Model model, HttpSession session) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		return "account.jsp";
+	}
+	
+	@PutMapping("/account/{id}/edit")
+	public String editAccount(@PathVariable Long id, Model model, @Valid @ModelAttribute("user") User editUser, BindingResult result, HttpSession session) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		
+		if(result.hasErrors()) {
+			return "account.jsp";
+		}
+		
+		userServ.updateUser(editUser);
+		return "redirect:/home";
+	}
+	
+	@GetMapping("/order")
+	public String order(HttpSession session, Model model) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		return "order.jsp";
+	}
+	
+	@GetMapping("/craftapizza")
+	public String craftPizza(HttpSession session, Model model) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		return "craftapizza.jsp";
 	}
 }
