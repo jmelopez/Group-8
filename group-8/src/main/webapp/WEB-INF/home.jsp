@@ -25,6 +25,7 @@
 	<div class="contatiner">
 		<div class="content">
 			<h1>Successful registration/login</h1>
+			<a href="/logout">Logout</a>
 		</div>	
 	</div>
 
