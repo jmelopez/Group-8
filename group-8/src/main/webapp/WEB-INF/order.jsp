@@ -35,6 +35,12 @@
 		
 		<div class="content">
 			<h1>Order Page</h1>
+			<h4>Order Details:</h4>
+			
+			<c:out value="${order.getCrust()}"></c:out>
+			<c:out value="${order.getDeliveryMethod()}"></c:out>
+			<c:out value="${order.getQuantity()}"></c:out>
+			<c:out value="${order.getSize()}"></c:out>
 		</div>
 	</div>
 </body>
