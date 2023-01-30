@@ -42,9 +42,6 @@
 			<span class="d-sm-table p-2 bd-highlight">Crust: <c:out value="${order.getCrust()}"></c:out></span>
 			<span class="d-xl-table p-2 bd-highlight">Size: <c:out value="${order.getSize()}"></c:out></span>
 
-			
-			
-			
 		</div>
 	</div>
 </body>

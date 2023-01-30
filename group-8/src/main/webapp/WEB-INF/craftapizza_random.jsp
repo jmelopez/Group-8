@@ -48,7 +48,6 @@
 				<label>Random Size:</label>
 				<form:select path="size" class="form-select"
 					aria-label="Default select">
-					<%-- <form:option value="${newRandomPizza.getSize()}"> Random Selection: ${newRandomPizza.getSize()}</form:option> --%>
 					<form:option value="Small">Small</form:option>
 					<form:option value="Medium">Medium</form:option>
 					<form:option value="Large">Large</form:option>
@@ -56,7 +55,6 @@
 				<label>Random Crust:</label>
 				<form:select path="crust" class="form-select"
 					aria-label="Default select">
-					<%-- <form:option value="${newRandomPizza.getCrust()}"> Random Selection: ${newRandomPizza.getCrust()}</form:option> --%>
 					<form:option value="Thick">Thick</form:option>
 					<form:option value="Thin">Thin</form:option>
 					<form:option value="Stuffed">Stuffed</form:option>
