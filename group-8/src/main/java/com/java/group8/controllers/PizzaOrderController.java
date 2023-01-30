@@ -104,12 +104,12 @@ public class PizzaOrderController {
 			pastOrderServ.savePastOrder(pastOrder);
 		}
 		
-		for (int i=0; i< pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
+		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
 			pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(i).getId());
 		}
-		
-		pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(0).getId()); // Empties cart, there's probably a cleaner way
-
+		if (pizzaServ.findByUser(userServ.getById(uid)).size() >0) {
+			pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(0).getId()); // Ugly but it works, clears cart on checkout
+		}
 		return "redirect:/home";
 	}
 	
