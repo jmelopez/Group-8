@@ -159,7 +159,7 @@ public class PizzaOrderController {
 		}
 		pastOrderServ.DeletePastOrder(id);
 		
-		return "redirect:/home";
+		return "redirect:/account/{id}";
 	}
 	
 }
