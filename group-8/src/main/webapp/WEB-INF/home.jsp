@@ -42,7 +42,13 @@
 	
 					<div class="card-body">
 						<p class="card-text">Empty card</p>
-						<a href="/craftapizza" class="btn btn-primary">NEW ORDER</a>
+						<c:if test="${totalOrders > 0}">
+							<a href="/craftapizza" class="btn btn-primary">ADD TO ORDER</a>
+						</c:if>
+						
+						<c:if test="${totalOrders == 0}">
+							<a href="/craftapizza" class="btn btn-primary">NEW ORDER</a>
+						</c:if> 
 					</div>
 				</div>
 				<div class="card p-3">
