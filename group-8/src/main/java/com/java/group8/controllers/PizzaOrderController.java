@@ -94,7 +94,6 @@ public class PizzaOrderController {
 
 		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
 			PizzaOrder pizzaOrder = pizzaServ.findByUser(userServ.getById(uid)).get(i);
-			System.out.println(pizzaOrder.getCrust());
 			PastOrder pastOrder = new PastOrder();
 			pastOrder.setCrust(pizzaOrder.getCrust());
 			pastOrder.setSize(pizzaOrder.getSize());

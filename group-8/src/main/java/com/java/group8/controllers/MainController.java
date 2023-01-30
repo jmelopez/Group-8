@@ -104,7 +104,7 @@ public class MainController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
-		model.addAttribute("currentOrders", pastOrderServ.findByUser(userServ.getById(uid)));
+		model.addAttribute("pastOrders", pastOrderServ.findByUser(userServ.getById(uid)));
 		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
 		return "account.jsp";
 	}
