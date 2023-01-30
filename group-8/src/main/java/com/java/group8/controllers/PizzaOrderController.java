@@ -102,8 +102,13 @@ public class PizzaOrderController {
 			pastOrder.setFavorite(false);
 			pastOrder.setCustomer(userServ.getById(uid));
 			pastOrderServ.savePastOrder(pastOrder);
+		}
+		
+		for (int i=0; i< pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
 			pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(i).getId());
 		}
+		
+		pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(0).getId()); // Empties cart, there's probably a cleaner way
 
 		return "redirect:/home";
 	}
