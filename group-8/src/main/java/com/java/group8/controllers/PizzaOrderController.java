@@ -65,17 +65,20 @@ public class PizzaOrderController {
 		}
 		// Needs to be a Service. I built it out quickly just to see it display.
 		Integer currentOrder = pizzaServ.findByUser(userServ.getById(uid)).size()-1; // Gets most recent order
-		String crustType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getCrust(); // Grabs details of the order
-		String methodType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getDeliveryMethod();
-		String sizeType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getSize();
-		Integer qty = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getQuantity();
 		
-		order.setCrust(crustType); // Sets details for a view model
-		order.setQuantity(qty);
-		order.setDeliveryMethod(methodType);
-		order.setSize(sizeType);
-		
-		return "order.jsp";
+		if (currentOrder >=0 ) {
+			String crustType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getCrust(); // Grabs details of the order
+			String methodType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getDeliveryMethod();
+			String sizeType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getSize();
+			Integer qty = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getQuantity();
+			order.setCrust(crustType); // Sets details for a view model
+			order.setQuantity(qty);
+			order.setDeliveryMethod(methodType);
+			order.setSize(sizeType);
+			return "order.jsp"; 
+		} else { // If the User has never ordered before:
+			return "redirect:/craftapizza";
+		}
 	}
 	
 	
