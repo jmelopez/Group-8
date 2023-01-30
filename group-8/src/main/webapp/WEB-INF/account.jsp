@@ -28,16 +28,19 @@
 			<div class="btn-group btn-group-lg" role="group"
 				aria-label="Basic button group">
 				<a href="/home" class="btn btn-outline-primary">Home</a> <a
-					href="/order" class="btn btn-outline-primary">Order (<c:out value="${totalOrders}"></c:out>)</a> <a
-					href="#" class="btn btn-primary">Account</a> <a
-					href="/logout" class="btn btn-outline-primary">Logout</a>
+					href="/order" class="btn btn-outline-primary">Order (<c:out
+						value="${totalOrders}"></c:out>)
+				</a> <a href="#" class="btn btn-primary">Account</a> <a href="/logout"
+					class="btn btn-outline-primary">Logout</a>
 			</div>
 		</nav>
 		<div class="content">
-			<div class="d-flex flex-row bd-highlight justify-content-between text-center p-3">
+			<div
+				class="d-flex flex-row bd-highlight justify-content-between text-center p-3">
 				<div class="flex-grow-1 p-3">
 					<h1>Account Info</h1>
-					<form:form action="/account/${user.id}/edit" method="POST" modelAttribute="user">
+					<form:form action="/account/${user.id}/edit" method="POST"
+						modelAttribute="user">
 						<input type="hidden" name="_method" value="put">
 
 						<div class="row mb-3">
@@ -89,7 +92,7 @@
 							<form:label path="state" class="col-sm-1 col-form-label fw-bold">State:</form:label>
 							<div class="col-sm-2">
 								<form:select class="form-select form-select-sm" path="state">
-								<form:errors path="state" />
+									<form:errors path="state" />
 									<form:option value="${user.state}"> ${user.state}</form:option>
 									<form:option value="AL"> AL </form:option>
 									<form:option value="AK"> AK </form:option>
@@ -151,23 +154,20 @@
 				</div>
 				<div class="flex-grow-1 p-3">
 					<h1>Past Orders</h1>
-					<table class="table">
-						<thead>
-							<tr>
-								<td>
-									<div class="card m-2">
-										<div class="card-body">Pizza Details</div>
-									</div>
-									<div class="card m-2">
-										<div class="card-body">Pizza Details</div>
-									</div>
-									<div class="card m-2">
-										<div class="card-body">Pizza Details</div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					<c:forEach var="PizzaOrder" items="${currentOrders}">
+						<div class="card">
+							<div class="card-body">
+								<span class="d-md-table p-2 bd-highlight">Delivery
+									Method: <c:out value="${PizzaOrder.deliveryMethod}"></c:out> </span> 
+									<span class="d-md-table p-2 bd-highlight">Size: <c:out
+										value="${PizzaOrder.size}"></c:out></span> 
+										<span class="d-md-table p-2 bd-highlight">Crust: <c:out
+										value="${PizzaOrder.crust}"></c:out></span> 
+										<span class="d-md-table p-2 bd-highlight">QTY: <c:out
+										value="${PizzaOrder.quantity}"></c:out></span> 
+							</div>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

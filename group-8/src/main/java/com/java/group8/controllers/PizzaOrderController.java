@@ -1,7 +1,5 @@
 package com.java.group8.controllers;
 
-import java.util.Optional;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -74,18 +72,6 @@ public class PizzaOrderController {
 		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
 		
 		if (currentOrder >=0 ) {
-			String crustType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getCrust(); // Grabs details of the order
-			String methodType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getDeliveryMethod();
-			String sizeType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getSize();
-			Integer qty = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getQuantity();
-			Long id = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getId();
-			
-			order.setCrust(crustType); // Sets details for a view model
-			order.setQuantity(qty);
-			order.setDeliveryMethod(methodType);
-			order.setSize(sizeType);
-			order.setId(id);
-			
 			return "order.jsp"; 
 		} else { // If the User has never ordered before:
 			return "redirect:/craftapizza";

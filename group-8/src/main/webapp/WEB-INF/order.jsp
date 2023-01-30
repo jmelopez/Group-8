@@ -48,7 +48,7 @@
 								value="${PizzaOrder.crust}"></c:out></span> <span
 							class="d-md-table p-2 bd-highlight">QTY: <c:out
 								value="${PizzaOrder.quantity}"></c:out></span> <a
-							href="/deleteorder/${order.getId()}" class="btn btn-danger">Remove
+							href="/deleteorder/${PizzaOrder.getId()}" class="btn btn-danger">Remove
 							From Order</a>
 					</div>
 				</div>
