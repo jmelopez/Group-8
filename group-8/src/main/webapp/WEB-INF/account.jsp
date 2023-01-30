@@ -154,17 +154,18 @@
 				</div>
 				<div class="flex-grow-1 p-3">
 					<h1>Past Orders</h1>
-					<c:forEach var="PizzaOrder" items="${currentOrders}">
+					<c:forEach var="PastOrder" items="${currentOrders}">
 						<div class="card">
 							<div class="card-body">
 								<span class="d-md-table p-2 bd-highlight">Delivery
-									Method: <c:out value="${PizzaOrder.deliveryMethod}"></c:out> </span> 
+									Method: <c:out value="${PastOrder.deliveryMethod}"></c:out> </span> 
 									<span class="d-md-table p-2 bd-highlight">Size: <c:out
-										value="${PizzaOrder.size}"></c:out></span> 
+										value="${PastOrder.size}"></c:out></span> 
 										<span class="d-md-table p-2 bd-highlight">Crust: <c:out
-										value="${PizzaOrder.crust}"></c:out></span> 
+										value="${PastOrder.crust}"></c:out></span> 
 										<span class="d-md-table p-2 bd-highlight">QTY: <c:out
-										value="${PizzaOrder.quantity}"></c:out></span> 
+										value="${PastOrder.quantity}"></c:out></span>
+										<a href="/deleteorder/${PastOrder.getId()}" class="btn btn-danger">Remove</a>
 							</div>
 						</div>
 					</c:forEach>

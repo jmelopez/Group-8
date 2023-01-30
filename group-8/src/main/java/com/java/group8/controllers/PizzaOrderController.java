@@ -63,7 +63,7 @@ public class PizzaOrderController {
 	}
 	
 	@GetMapping("/order")
-	public String order(@ModelAttribute("checkoutOrder") PastOrder checkoutOrder, HttpSession session, Model model) {
+	public String order(@ModelAttribute("checkoutOrder") PizzaOrder checkoutOrder, HttpSession session, Model model) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
 			return "error.jsp";
@@ -82,22 +82,30 @@ public class PizzaOrderController {
 			return "redirect:/craftapizza";
 		}
 	}
-	
+
 	@PostMapping("/checkout")
-	public String checkout(@Valid @ModelAttribute("checkoutOrder") PastOrder checkoutOrder, BindingResult result, Model model, HttpSession session) {
+	public String checkout(Model model, HttpSession session) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
 			return "error.jsp";
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
-		
-		pastOrderServ.savePastOrder(checkoutOrder);
-		
-		model.addAttribute("currentOrders", pizzaServ.findByUser(userServ.getById(uid)));
-		
-		
-		
+
+		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
+			PizzaOrder pizzaOrder = pizzaServ.findByUser(userServ.getById(uid)).get(i);
+			System.out.println(pizzaOrder.getCrust());
+			PastOrder pastOrder = new PastOrder();
+			pastOrder.setCrust(pizzaOrder.getCrust());
+			pastOrder.setSize(pizzaOrder.getSize());
+			pastOrder.setDeliveryMethod(pizzaOrder.getDeliveryMethod());
+			pastOrder.setQuantity(pizzaOrder.getQuantity());
+			pastOrder.setFavorite(false);
+			pastOrder.setCustomer(userServ.getById(uid));
+			pastOrderServ.savePastOrder(pastOrder);
+			pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(i).getId());
+		}
+
 		return "redirect:/home";
 	}
 	
@@ -130,10 +138,22 @@ public class PizzaOrderController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
+
+		pizzaServ.DeletePizzaOrder(id);
 		
-		Integer currentOrder = pizzaServ.findByUser(userServ.getById(uid)).size()-1;
-		Long orderId = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getId();
-		pizzaServ.DeletePizzaOrder(orderId);
+		return "redirect:/home";
+	}
+	
+	@GetMapping("/deletePastOrder/{id}")
+	@DeleteMapping("/deletePastOrder/{id}")
+	public String deletePastOrder(@PathVariable Long id, HttpSession session, Model model) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		pastOrderServ.DeletePastOrder(id);
 		
 		return "redirect:/home";
 	}

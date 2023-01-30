@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.java.group8.models.LoginUser;
 import com.java.group8.models.User;
+import com.java.group8.services.PastOrderService;
 import com.java.group8.services.PizzaOrderService;
 import com.java.group8.services.UserService;
 
@@ -28,6 +29,9 @@ public class MainController {
 	
 	@Autowired
 	private PizzaOrderService pizzaServ;
+	
+	@Autowired
+	private PastOrderService pastOrderServ; 
 	
 	@GetMapping("/")
 	public String login(Model model, HttpSession session) {
@@ -100,7 +104,7 @@ public class MainController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
-		model.addAttribute("currentOrders", pizzaServ.findByUser(userServ.getById(uid)));
+		model.addAttribute("currentOrders", pastOrderServ.findByUser(userServ.getById(uid)));
 		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
 		return "account.jsp";
 	}
