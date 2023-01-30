@@ -164,5 +164,7 @@ public class User {
 	// Relationships:
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<PizzaOrder> pizzaOrders;
-
+    
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<PastOrder> pastOrders;
 }

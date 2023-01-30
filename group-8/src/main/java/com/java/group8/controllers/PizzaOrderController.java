@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.java.group8.models.PastOrder;
 import com.java.group8.models.PizzaOrder;
+import com.java.group8.services.PastOrderService;
 import com.java.group8.services.PizzaOrderService;
 import com.java.group8.services.UserService;
 
@@ -25,6 +27,9 @@ public class PizzaOrderController {
 	
 	@Autowired
 	private PizzaOrderService pizzaServ;
+	
+	@Autowired
+	private PastOrderService pastOrderServ;
 	
 	
 	@GetMapping("/craftapizza")
@@ -58,7 +63,7 @@ public class PizzaOrderController {
 	}
 	
 	@GetMapping("/order")
-	public String order(@ModelAttribute("order") PizzaOrder order, HttpSession session, Model model) {
+	public String order(@ModelAttribute("checkoutOrder") PastOrder checkoutOrder, HttpSession session, Model model) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
 			return "error.jsp";
@@ -76,6 +81,24 @@ public class PizzaOrderController {
 		} else { // If the User has never ordered before:
 			return "redirect:/craftapizza";
 		}
+	}
+	
+	@PostMapping("/checkout")
+	public String checkout(@Valid @ModelAttribute("checkoutOrder") PastOrder checkoutOrder, BindingResult result, Model model, HttpSession session) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		
+		pastOrderServ.savePastOrder(checkoutOrder);
+		
+		model.addAttribute("currentOrders", pizzaServ.findByUser(userServ.getById(uid)));
+		
+		
+		
+		return "redirect:/home";
 	}
 	
 	

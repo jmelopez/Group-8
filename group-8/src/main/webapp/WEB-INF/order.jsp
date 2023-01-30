@@ -47,13 +47,29 @@
 							class="d-md-table p-2 bd-highlight">Crust: <c:out
 								value="${PizzaOrder.crust}"></c:out></span> <span
 							class="d-md-table p-2 bd-highlight">QTY: <c:out
-								value="${PizzaOrder.quantity}"></c:out></span> <a
-							href="/deleteorder/${PizzaOrder.getId()}" class="btn btn-danger">Remove
-							From Order</a>
+								value="${PizzaOrder.quantity}"></c:out></span> 
+								<a href="/deleteorder/${PizzaOrder.getId()}" class="btn btn-danger">Remove From Order</a>
 					</div>
 				</div>
 			</c:forEach>
 			<h4>Total Price: FREE! (add price later)</h4>
+			
+
+
+
+
+			<form:form action="/checkout" method="POST" modelAttribute="checkoutOrder">
+				<form:input type="hidden" path="deliveryMethod" value="${PizzaOrder.deliveryMethod}" />
+				<form:input type="hidden" path="size" value="${PizzaOrder.size}" />
+				<form:input type="hidden" path="crust" value="${PizzaOrder.crust}" />
+				<form:input type="hidden" path="quantity" value="${PizzaOrder.quantity}" />
+				<form:input type="hidden" path="favorite" value="false" />
+				<input type="submit" class="btn btn-success col-sm-3" value="Checkout" />
+			</form:form>
+			
+			
+
+
 
 		</div>
 	</div>
