@@ -27,40 +27,50 @@
 			<h1 class="">Pizza Pete's</h1>
 			<div class="btn-group btn-group-lg" role="group"
 				aria-label="Basic button group">
-				<a href="/home" class="btn btn-primary">Home</a> 
-				<a href="/order" class="btn btn-outline-primary">Order (<c:out value="${totalOrders}"></c:out>)</a> 
-				<a href="/account/${user.id}" class="btn btn-outline-primary">Account</a> 
+				<a href="/home" class="btn btn-primary">Home</a> <a href="/order"
+					class="btn btn-outline-primary">Order (<c:out
+						value="${totalOrders}"></c:out>)
+				</a> <a href="/account/${user.id}" class="btn btn-outline-primary">Account</a>
 				<a href="/logout" class="btn btn-outline-primary">Logout</a>
 			</div>
 		</nav>
 
-		<div class="content">
+		<div class="container">
 			<h2 class="text-center">Quick Options</h2>
-			<div class="d-flex flex-row bd-highlight justify-content-between text-center p-3">
-
-				<div class="card p-3">
-	
-					<div class="card-body">
-						<p class="card-text">Empty card</p>
-						<a href="/craftapizza" class="btn btn-primary">NEW ORDER</a>
+			<div class="text-center p-3">
+				<div class="row">
+					<div class="col-12 col-md-6 col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<p class="card-text">Empty card</p>
+								<c:if test="${totalOrders > 0}">
+									<a href="/craftapizza" class="btn btn-primary">ADD TO ORDER</a>
+								</c:if>
+								<c:if test="${totalOrders == 0}">
+									<a href="/craftapizza" class="btn btn-primary">NEW ORDER</a>
+								</c:if>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<p class="card-text">Empty card</p>
+								<a href="#" class="btn btn-primary">RE-ORDER MY FAVE</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 col-lg-4">
+						<div class="card">
+							<div class="card-body">
+								<p class="card-text">Empty card</p>
+								<a href="/craftapizza/random" class="btn btn-primary">SURPRISE ME</a>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="card p-3">
-
-					<div class="card-body">
-						<p class="card-text">Empty card</p>
-						<a href="#" class="btn btn-primary">RE-ORDER MY FAVE</a>
-					</div>
-				</div>
-				<div class="card p-3">
-
-					<div class="card-body">
-						<p class="card-text">Empty card</p>
-						<a href="/craftapizza/random" class="btn btn-primary">SURPRISE ME</a>
-					</div>
-				</div>
-			</div>
 			</div>
 		</div>
+	</div>
 </body>
 </html>
