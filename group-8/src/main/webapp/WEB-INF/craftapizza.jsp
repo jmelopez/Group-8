@@ -36,7 +36,7 @@
 		</nav>
 
 		<div class="content">
-			<h1>Craft-A-Pizza Page</h1>
+			<h1>Craft-A-Pizza</h1>
 
 			<form:form action="/craftapizza/new" method="POST" modelAttribute="newPizzaOrder">
 				<label>Delivery Type:</label>
@@ -52,7 +52,7 @@
 					<form:option value="Medium">Medium</form:option>
 					<form:option value="Large">Large</form:option>
 				</form:select>
-				<label>Size:</label>
+				<label>Crust:</label>
 				<form:select path="crust" class="form-select"
 					aria-label="Default select">
 					<form:option value="Thin">Thin</form:option>

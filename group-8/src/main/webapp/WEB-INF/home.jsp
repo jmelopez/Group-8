@@ -56,7 +56,7 @@
 
 					<div class="card-body">
 						<p class="card-text">Empty card</p>
-						<a href="#" class="btn btn-primary">SURPRISE ME</a>
+						<a href="/craftapizza/random" class="btn btn-primary">SURPRISE ME</a>
 					</div>
 				</div>
 			</div>

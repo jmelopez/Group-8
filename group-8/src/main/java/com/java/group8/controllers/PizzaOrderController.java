@@ -77,4 +77,24 @@ public class PizzaOrderController {
 		
 		return "order.jsp";
 	}
+	
+	
+	@GetMapping("/craftapizza/random")
+	public String craftRandomPizza(@ModelAttribute("newRandomPizza") PizzaOrder newRandomPizza, Model model, HttpSession session) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		
+		String randomCrust = pizzaServ.createRandomPizzaOrder().getCrust();
+		String randomSize = pizzaServ.createRandomPizzaOrder().getSize();
+		
+		newRandomPizza.setCrust(randomCrust);
+		newRandomPizza.setSize(randomSize);
+		
+		return "craftapizza_random.jsp";
+	}
+	
 }
