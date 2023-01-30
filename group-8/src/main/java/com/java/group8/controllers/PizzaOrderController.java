@@ -1,5 +1,7 @@
 package com.java.group8.controllers;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -7,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.java.group8.models.PizzaOrder;
@@ -33,6 +37,7 @@ public class PizzaOrderController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
 		return "craftapizza.jsp";
 	}
 	
@@ -48,7 +53,6 @@ public class PizzaOrderController {
 		if (result.hasErrors()) {
 			return "craftapizza.jsp";
 		}
-		
 		newPizzaOrder.setCustomer(userServ.getById(uid)); // Gets only PizzaOrder's by logged in user.
 		pizzaServ.createPizzaOrder(newPizzaOrder);
 		
@@ -66,15 +70,22 @@ public class PizzaOrderController {
 		// Needs to be a Service. I built it out quickly just to see it display.
 		Integer currentOrder = pizzaServ.findByUser(userServ.getById(uid)).size()-1; // Gets most recent order
 		
+		model.addAttribute("currentOrders", pizzaServ.findByUser(userServ.getById(uid)));
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
+		
 		if (currentOrder >=0 ) {
 			String crustType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getCrust(); // Grabs details of the order
 			String methodType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getDeliveryMethod();
 			String sizeType = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getSize();
 			Integer qty = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getQuantity();
+			Long id = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getId();
+			
 			order.setCrust(crustType); // Sets details for a view model
 			order.setQuantity(qty);
 			order.setDeliveryMethod(methodType);
 			order.setSize(sizeType);
+			order.setId(id);
+			
 			return "order.jsp"; 
 		} else { // If the User has never ordered before:
 			return "redirect:/craftapizza";
@@ -97,7 +108,25 @@ public class PizzaOrderController {
 		newRandomPizza.setCrust(randomCrust);
 		newRandomPizza.setSize(randomSize);
 		
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
 		return "craftapizza_random.jsp";
+	}
+	
+	@GetMapping("/deleteorder/{id}")
+	@DeleteMapping("/deleteorder/{id}")
+	public String deleteOrder(@PathVariable Long id, HttpSession session, Model model) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		
+		Integer currentOrder = pizzaServ.findByUser(userServ.getById(uid)).size()-1;
+		Long orderId = pizzaServ.findByUser(userServ.getById(uid)).get(currentOrder).getId();
+		pizzaServ.DeletePizzaOrder(orderId);
+		
+		return "redirect:/home";
 	}
 	
 }

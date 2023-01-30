@@ -88,6 +88,7 @@ public class MainController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
 		return "home.jsp";
 	}
 	
@@ -99,6 +100,7 @@ public class MainController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
 		return "account.jsp";
 	}
 	
@@ -114,7 +116,6 @@ public class MainController {
 		if(result.hasErrors()) {
 			return "account.jsp";
 		}
-		
 		userServ.updateUser(editUser);
 		return "redirect:/home";
 	}

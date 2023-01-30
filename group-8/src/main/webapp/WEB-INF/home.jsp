@@ -28,7 +28,7 @@
 			<div class="btn-group btn-group-lg" role="group"
 				aria-label="Basic button group">
 				<a href="/home" class="btn btn-primary">Home</a> 
-				<a href="/order" class="btn btn-outline-primary">Order</a> 
+				<a href="/order" class="btn btn-outline-primary">Order (<c:out value="${totalOrders}"></c:out>)</a> 
 				<a href="/account/${user.id}" class="btn btn-outline-primary">Account</a> 
 				<a href="/logout" class="btn btn-outline-primary">Logout</a>
 			</div>

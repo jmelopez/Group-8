@@ -44,5 +44,9 @@ public class PizzaOrderService {
 		
 		return randomPizza;
 	}
+	
+	public void DeletePizzaOrder(Long id) {
+		pizzaOrderRepo.deleteById(id);
+	}
 
 }

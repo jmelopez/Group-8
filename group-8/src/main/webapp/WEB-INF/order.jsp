@@ -25,22 +25,35 @@
 	<div class="contatiner">
 		<nav class="navbar navbar-light bg-light p-3">
 			<h1 class="">Pizza Pete's</h1>
-			<div class="btn-group btn-group-lg" role="group" aria-label="Basic button group">
-				<a href="/home" class="btn btn-outline-primary">Home</a>
-				<a href="/order" class="btn btn-primary">Order</a>
+			<div class="btn-group btn-group-lg" role="group"
+				aria-label="Basic button group">
+				<a href="/home" class="btn btn-outline-primary">Home</a> <a
+					href="/order" class="btn btn-primary">Order (<c:out value="${totalOrders}"></c:out>)</a> 
 				<a href="/account/${user.id}" class="btn btn-outline-primary">Account</a>
 				<a href="/logout" class="btn btn-outline-primary">Logout</a>
 			</div>
 		</nav>
-		
+
 		<div class="content">
-			<h1>Order Page</h1>
-			
-			<h4>Order Details:</h4>
-			<span class="d-md-table p-2 bd-highlight">Delivery Method: <c:out value="${order.getDeliveryMethod()}"></c:out></span>
-			<span class="d-lg-table p-2 bd-highlight">QTY: <c:out value="${order.getQuantity()}"></c:out></span>
-			<span class="d-sm-table p-2 bd-highlight">Crust: <c:out value="${order.getCrust()}"></c:out></span>
-			<span class="d-xl-table p-2 bd-highlight">Size: <c:out value="${order.getSize()}"></c:out></span>
+			<h1>Order:</h1>
+
+			<c:forEach var="PizzaOrder" items="${currentOrders}">
+				<div class="card">
+					<div class="card-body">
+						<span class="d-md-table p-2 bd-highlight">Delivery Method:
+							<c:out value="${PizzaOrder.deliveryMethod}"></c:out>
+						</span> <span class="d-md-table p-2 bd-highlight">Size: <c:out
+								value="${PizzaOrder.size}"></c:out></span> <span
+							class="d-md-table p-2 bd-highlight">Crust: <c:out
+								value="${PizzaOrder.crust}"></c:out></span> <span
+							class="d-md-table p-2 bd-highlight">QTY: <c:out
+								value="${PizzaOrder.quantity}"></c:out></span> <a
+							href="/deleteorder/${order.getId()}" class="btn btn-danger">Remove
+							From Order</a>
+					</div>
+				</div>
+			</c:forEach>
+			<h4>Total Price: FREE! (add price later)</h4>
 
 		</div>
 	</div>
