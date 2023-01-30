@@ -29,47 +29,52 @@
 			<div class="btn-group btn-group-lg" role="group"
 				aria-label="Basic button group">
 				<a href="/home" class="btn btn-outline-primary">Home</a> <a
-					href="/order" class="btn btn-primary">Order (<c:out value="${totalOrders}"></c:out>)</a> <a
-					href="/account/${user.id}" class="btn btn-outline-primary">Account</a>
+					href="/order" class="btn btn-primary">Order (<c:out
+						value="${totalOrders}"></c:out>)
+				</a> <a href="/account/${user.id}" class="btn btn-outline-primary">Account</a>
 				<a href="/logout" class="btn btn-outline-primary">Logout</a>
 			</div>
 		</nav>
 
 		<div class="content">
-			<h1>Craft-A-Pizza</h1>
+		<h1>Craft-A-Pizza</h1>
+			<div class="col-3">
+				<form:form action="/craftapizza/new" method="POST"
+					modelAttribute="newPizzaOrder">
+					<label>Delivery Type:</label>
+					<form:select path="deliveryMethod" class="form-select"
+						aria-label="Default select">
+						<form:option value="CarryOut">CarryOut</form:option>
+						<form:option value="Delivery">Delivery</form:option>
+					</form:select>
+					<label>Size:</label>
+					<form:select path="size" class="form-select"
+						aria-label="Default select">
+						<form:option value="Small">Small</form:option>
+						<form:option value="Medium">Medium</form:option>
+						<form:option value="Large">Large</form:option>
+					</form:select>
+					<label>Crust:</label>
+					<form:select path="crust" class="form-select"
+						aria-label="Default select">
+						<form:option value="Thin">Thin</form:option>
+						<form:option value="Thick">Thick</form:option>
+						<form:option value="Stuffed">Stuffed</form:option>
+					</form:select>
+					<label>QTY:</label>
+					<form:select path="quantity" class="form-select"
+						aria-label="Default select">
+						<form:option value="1">1</form:option>
+						<form:option value="2">2</form:option>
+						<form:option value="3">3</form:option>
+					</form:select>
 
-			<form:form action="/craftapizza/new" method="POST" modelAttribute="newPizzaOrder">
-				<label>Delivery Type:</label>
-				<form:select path="deliveryMethod" class="form-select"
-					aria-label="Default select">
-					<form:option value="CarryOut">CarryOut</form:option>
-					<form:option value="Delivery">Delivery</form:option>
-				</form:select>
-				<label>Size:</label>
-				<form:select path="size" class="form-select"
-					aria-label="Default select">
-					<form:option value="Small">Small</form:option>
-					<form:option value="Medium">Medium</form:option>
-					<form:option value="Large">Large</form:option>
-				</form:select>
-				<label>Crust:</label>
-				<form:select path="crust" class="form-select"
-					aria-label="Default select">
-					<form:option value="Thin">Thin</form:option>
-					<form:option value="Thick">Thick</form:option>
-					<form:option value="Stuffed">Stuffed</form:option>
-				</form:select>
-				<label>QTY:</label>
-				<form:select path="quantity" class="form-select"
-					aria-label="Default select">
-					<form:option value="1">1</form:option>
-					<form:option value="2">2</form:option>
-					<form:option value="3">3</form:option>
-				</form:select>
+					<form:input type="hidden" path="favorite" value="false" />
+					<input type="submit" class="btn btn-primary col-sm-3"
+						value="Add to Order" />
+				</form:form>
+			</div>
 
-				<form:input type="hidden" path="favorite" value="false" />
-				<input type="submit" class="btn btn-primary col-sm-3" value="Add to Order" />
-			</form:form>
 		</div>
 	</div>
 </body>
