@@ -57,6 +57,7 @@ public class PizzaOrderController {
 		if (result.hasErrors()) {
 			return "craftapizza.jsp";
 		}
+		
 		newPizzaOrder.setCustomer(userServ.getById(uid)); // Gets only PizzaOrder's by logged in user.
 		pizzaServ.createPizzaOrder(newPizzaOrder);
 		
@@ -94,17 +95,19 @@ public class PizzaOrderController {
 		}
 
 		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
-			PizzaOrder pizzaOrder = pizzaServ.findByUser(userServ.getById(uid)).get(i);
-			PastOrder pastOrder = new PastOrder();
-			pastOrder.setCrust(pizzaOrder.getCrust());
-			pastOrder.setSize(pizzaOrder.getSize());
-			pastOrder.setDeliveryMethod(pizzaOrder.getDeliveryMethod());
-			pastOrder.setQuantity(pizzaOrder.getQuantity());
-			pastOrder.setFavorite(false);
-			pastOrder.setCustomer(userServ.getById(uid));
-			pastOrderServ.savePastOrder(pastOrder);
+			if (pizzaServ.findByUser(userServ.getById(uid)).get(i).getFavorite() == false) {
+				PizzaOrder pizzaOrder = pizzaServ.findByUser(userServ.getById(uid)).get(i);
+				PastOrder pastOrder = new PastOrder();
+				pastOrder.setCrust(pizzaOrder.getCrust());
+				pastOrder.setSize(pizzaOrder.getSize());
+				pastOrder.setDeliveryMethod(pizzaOrder.getDeliveryMethod());
+				pastOrder.setQuantity(pizzaOrder.getQuantity());
+				pastOrder.setFavorite(false);
+				pastOrder.setCustomer(userServ.getById(uid));
+				pastOrderServ.savePastOrder(pastOrder);
+			}
 		}
-		
+
 		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
 			pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(i).getId());
 		}
