@@ -88,33 +88,32 @@ public class MainController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/home")
+	@GetMapping("/home") // returns home.jsp, with buttons for ordering new, random and re-ordering favorite pizzas
 	public String dashboard(HttpSession session, Model model) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
 			return "error.jsp";
 		} else  {
-			model.addAttribute("user", userServ.getById(uid));
-		}
-		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
-		
-		List<PastOrder> pastOrders = pastOrderServ.findByUser(userServ.getById(uid));
-		
-		model.addAttribute("favorite", false);
-		
-		ListIterator<PastOrder> it = pastOrders.listIterator();
-		
-		while (it.hasNext() ) {
-			if (it.next().getFavorite() == true) {
-				model.addAttribute("favorite", true);
-			}
+			model.addAttribute("user", userServ.getById(uid)); // boilerplate userID validation
 		}
 		
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size()); // Used to show Navbar items in order
 		
+		model.addAttribute("favorite", false); // "favorite" is used in home.jsp to check if a favorite has been set. It's False by default.
+		
+		List<PastOrder> pastOrders = pastOrderServ.findByUser(userServ.getById(uid)); // Grab all past orders, see if any of them are "favorite"
+		
+		ListIterator<PastOrder> it = pastOrders.listIterator(); // list iterator to iterate through list of past orders, looking for favorite order.
+		
+		while (it.hasNext() ) { // "it" iterator runs through list of past orders until it reaches the end of the list.
+			if (it.next().getFavorite() == true) { // if any of the PastOrder objects have their favorite boolean set to true...
+				model.addAttribute("favorite", true); // set the model attribute named "favorite", which shows up in the home.jsp, to true.
+			}											// "favorite" is used in a c:if in home.jsp, and changes the re-order fav button to read "no fav" if no favorites are found.
+		}
 		return "home.jsp";
 	}
 	
-	@GetMapping("/account/{id}")
+	@GetMapping("/account/{id}") // returns account.jsp, shows users previously checked out orders, or, "past orders" and editable account details
 	public String account(@PathVariable Long id, Model model, HttpSession session) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
@@ -122,12 +121,12 @@ public class MainController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
-		model.addAttribute("pastOrders", pastOrderServ.findByUser(userServ.getById(uid)));
-		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
+		model.addAttribute("pastOrders", pastOrderServ.findByUser(userServ.getById(uid))); // used for displaying past orders through a c:forEach in account.jsp
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size()); // used for NavBar, shows orders in cart
 		return "account.jsp";
 	}
 	
-	@PutMapping("/account/{id}/edit")
+	@PutMapping("/account/{id}/edit") // edits user account details, request sent from account.jsp
 	public String editAccount(@PathVariable Long id, Model model, @Valid @ModelAttribute("user") User editUser, BindingResult result, HttpSession session) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
@@ -139,7 +138,7 @@ public class MainController {
 		if(result.hasErrors()) {
 			return "account.jsp";
 		}
-		userServ.updateUser(editUser);
+		userServ.updateUser(editUser); // saves user account details
 		return "redirect:/home";
 	}
 	

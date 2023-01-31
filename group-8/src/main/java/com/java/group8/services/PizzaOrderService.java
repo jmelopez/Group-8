@@ -39,9 +39,6 @@ public class PizzaOrderService {
 		
 		randomPizza.setCrust(randomCrust);
 		randomPizza.setSize(randomSize);
-//		randomPizza.setDeliveryMethod("CarryOut");
-//		randomPizza.setQuantity(1);
-//		randomPizza.setFavorite(false);
 		
 		return randomPizza;
 	}

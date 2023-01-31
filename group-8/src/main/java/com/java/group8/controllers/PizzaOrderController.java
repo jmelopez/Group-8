@@ -27,13 +27,13 @@ public class PizzaOrderController {
 	private UserService userServ;
 	
 	@Autowired
-	private PizzaOrderService pizzaServ;
+	private PizzaOrderService pizzaServ; // orders that have never been through checkout are "PizzaOrder" and use this service
 	
 	@Autowired
-	private PastOrderService pastOrderServ;
+	private PastOrderService pastOrderServ; // orders that HAVE been checked out are "PastOrder" and use this service
 	
 	
-	@GetMapping("/craftapizza")
+	@GetMapping("/craftapizza") // Manual PizzaOrder creation, displays craftapizza.jsp
 	public String craftPizza(@ModelAttribute("newPizzaOrder") PizzaOrder newPizzaOrder, Model model, HttpSession session) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
@@ -41,11 +41,11 @@ public class PizzaOrderController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
-		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size()); // used for NavBar, displays total orders in cart
 		return "craftapizza.jsp";
 	}
 	
-	@PostMapping("/craftapizza/new")
+	@PostMapping("/craftapizza/new") // Saves a new PizzaOrder and sets "Customer" using User Id. "Customer" is used in the one to many the relationship mapping.
 	public String craftPizzaNew(@Valid @ModelAttribute("newPizzaOrder") PizzaOrder newPizzaOrder, BindingResult result, Model model, HttpSession session) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
@@ -58,13 +58,13 @@ public class PizzaOrderController {
 			return "craftapizza.jsp";
 		}
 		
-		newPizzaOrder.setCustomer(userServ.getById(uid)); // Gets only PizzaOrder's by logged in user.
-		pizzaServ.createPizzaOrder(newPizzaOrder);
+		newPizzaOrder.setCustomer(userServ.getById(uid)); // Sets Customer by UserID
+		pizzaServ.createPizzaOrder(newPizzaOrder); // Saves a new Pizza Order to the Database
 		
 		return "redirect:/order";
 	}
 	
-	@GetMapping("/order")
+	@GetMapping("/order") // Checkout screen. Will return user to craftapizza.jsp instead if there are no items in the cart.
 	public String order(@ModelAttribute("checkoutOrder") PizzaOrder checkoutOrder, HttpSession session, Model model) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
@@ -72,20 +72,20 @@ public class PizzaOrderController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
-		// Needs to be a Service. I built it out quickly just to see it display.
-		Integer currentOrder = pizzaServ.findByUser(userServ.getById(uid)).size()-1; // Gets most recent order
 		
-		model.addAttribute("currentOrders", pizzaServ.findByUser(userServ.getById(uid)));
+		model.addAttribute("currentOrders", pizzaServ.findByUser(userServ.getById(uid))); // Used for Navbar, displays # items in cart
+		Integer currentOrder = pizzaServ.findByUser(userServ.getById(uid)).size()-1; // Gets most recent order.
+
 		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
 		
-		if (currentOrder >=0 ) {
-			return "order.jsp"; 
+		if (currentOrder >=0 ) { // Checks if there are any items in the cart
+			return "order.jsp"; // Returns order.jsp if at least 1 order exists
 		} else { // If the User has never ordered before:
-			return "redirect:/craftapizza";
+			return "redirect:/craftapizza"; // Returns them to the craftapizza.jsp, where they make a manual order.
 		}
 	}
 
-	@PostMapping("/checkout")
+	@PostMapping("/checkout") // Removes ALL PizzaOrders, converts them to PastOrders
 	public String checkout(Model model, HttpSession session) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
@@ -94,32 +94,32 @@ public class PizzaOrderController {
 			model.addAttribute("user", userServ.getById(uid));
 		}
 
-		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
-			if (pizzaServ.findByUser(userServ.getById(uid)).get(i).getFavorite() == false) {
+		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) { // PizzaOrder to PastOrder converter
+			if (pizzaServ.findByUser(userServ.getById(uid)).get(i).getFavorite() == false) { // If PizzaOrder has not been saved as a favorite.
 				PizzaOrder pizzaOrder = pizzaServ.findByUser(userServ.getById(uid)).get(i);
-				PastOrder pastOrder = new PastOrder();
-				pastOrder.setCrust(pizzaOrder.getCrust());
-				pastOrder.setSize(pizzaOrder.getSize());
-				pastOrder.setDeliveryMethod(pizzaOrder.getDeliveryMethod());
-				pastOrder.setQuantity(pizzaOrder.getQuantity());
-				pastOrder.setFavorite(false);
-				pastOrder.setCustomer(userServ.getById(uid));
-				pastOrderServ.savePastOrder(pastOrder);
+				PastOrder pastOrder = new PastOrder(); // Sets up new PastOrder for this iteration
+				pastOrder.setCrust(pizzaOrder.getCrust()); // Sets PizzaOrder Crust to PastOrder Crust
+				pastOrder.setSize(pizzaOrder.getSize()); // Sets Size
+				pastOrder.setDeliveryMethod(pizzaOrder.getDeliveryMethod()); // Sets DeliveryMethod 
+				pastOrder.setQuantity(pizzaOrder.getQuantity()); // Sets Quantity
+				pastOrder.setFavorite(false); // Sets favorite to false manually - this keeps it from saving favorite orders twice when checking out
+				pastOrder.setCustomer(userServ.getById(uid)); // Sets customer from PizzaOrder customer
+				pastOrderServ.savePastOrder(pastOrder); // Finally, once it's done converting PizzaOrder to a PastOrder, it saves the PastOrder
 			}
 		}
 
 		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
-			pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(i).getId());
+			pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(i).getId()); // Empties the checkout of PizzaOrders, deleting them all. They live on as PastOrders
 		}
-		if (pizzaServ.findByUser(userServ.getById(uid)).size() >0) {
+		
+		if (pizzaServ.findByUser(userServ.getById(uid)).size() >0) { // Brute force, delete the last PizzaOrder in list (was giving me trouble for some reason)...
 			pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(0).getId()); // Ugly but it works, clears cart on checkout
 		}
 		
-		return "redirect:/home";
+		return "redirect:/home"; // Returns home, because returning to Order would redirect to home anyway if there's nothing to order.
 	}
 	
-	
-	@GetMapping("/craftapizza/random")
+	@GetMapping("/craftapizza/random") // Returns craftapizza_random.jsp, which randomly creates a pizza (but not delivery or quantity)
 	public String craftRandomPizza(@ModelAttribute("newRandomPizza") PizzaOrder newRandomPizza, Model model, HttpSession session) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
@@ -128,19 +128,20 @@ public class PizzaOrderController {
 			model.addAttribute("user", userServ.getById(uid));
 		}
 		
-		String randomCrust = pizzaServ.createRandomPizzaOrder().getCrust();
-		String randomSize = pizzaServ.createRandomPizzaOrder().getSize();
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size()); // used for navbar, displays # items in cart
 		
-		newRandomPizza.setCrust(randomCrust);
-		newRandomPizza.setSize(randomSize);
-		newRandomPizza.setCustomer(userServ.getById(uid)); // Gets only PizzaOrder's by logged in user
-		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
+		String randomCrust = pizzaServ.createRandomPizzaOrder().getCrust(); //randomly generates a crust
+		String randomSize = pizzaServ.createRandomPizzaOrder().getSize(); // randomly generates a size
+		
+		newRandomPizza.setCrust(randomCrust); // sets random crust
+		newRandomPizza.setSize(randomSize); // sets random size
+		newRandomPizza.setCustomer(userServ.getById(uid)); // Sets Customer based on logged in UserID
 		
 		return "craftapizza_random.jsp";
 	}
 	
 	@GetMapping("/deleteorder/{id}")
-	@DeleteMapping("/deleteorder/{id}")
+	@DeleteMapping("/deleteorder/{id}") // deletes a Pizza Order when you click "remove from order" in order.jsp
 	public String deleteOrder(@PathVariable Long id, HttpSession session, Model model) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
@@ -149,13 +150,13 @@ public class PizzaOrderController {
 			model.addAttribute("user", userServ.getById(uid));
 		}
 
-		pizzaServ.DeletePizzaOrder(id);
+		pizzaServ.DeletePizzaOrder(id); // slays the pizza
 		
 		return "redirect:/home";
 	}
 	
 	@GetMapping("/deletePastOrder/{id}")
-	@DeleteMapping("/deletePastOrder/{id}")
+	@DeleteMapping("/deletePastOrder/{id}") // removes a "PastOrder" from account.jsp in the Past Orders list displayed there
 	public String deletePastOrder(@PathVariable Long id, HttpSession session, Model model) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
@@ -164,11 +165,11 @@ public class PizzaOrderController {
 			model.addAttribute("user", userServ.getById(uid));
 		}
 		
-		pastOrderServ.DeletePastOrder(id);
+		pastOrderServ.DeletePastOrder(id); // removes past order with a vengence
 		return "redirect:/account/{id}";
 	}
 
-	@PutMapping("/favorite/{id}")
+	@PutMapping("/favorite/{id}") // Sets a PastOrder as a "Favorite". Only 1 PastOrder can be set this way.
 	public String editNPC(@Valid @ModelAttribute("fav") PastOrder pastOrder, BindingResult result, Model model, @PathVariable Long id,
 			HttpSession session) {
 		Long uid = (Long) session.getAttribute("userId");
@@ -177,23 +178,25 @@ public class PizzaOrderController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
-		PastOrder thisPastOrder;
-		for (int i = 0; i < pastOrderServ.findByUser(userServ.getById(uid)).size(); i++) {
-			thisPastOrder = pastOrderServ.findByUser(userServ.getById(uid)).get(i);
-			thisPastOrder.setFavorite(false);
+		
+		PastOrder thisPastOrder; // sets up empty PastOrder to take in what the previous PastOrder was + Favorite set to True
+		for (int i = 0; i < pastOrderServ.findByUser(userServ.getById(uid)).size(); i++) { // Sets ALL past orders to favorite = false
+			thisPastOrder = pastOrderServ.findByUser(userServ.getById(uid)).get(i); 
+			thisPastOrder.setFavorite(false); // there can only be one!
 		}
-		pastOrder.setFavorite(true);
-		pastOrder.setCrust(pastOrderServ.findById(pastOrder.getId()).get().getCrust());
-		pastOrder.setSize(pastOrderServ.findById(pastOrder.getId()).get().getSize());
+		
+		pastOrder.setFavorite(true); // Once all other PastOrders favorite booleans = false, it sets the PastOrder with the ID assigned to the button as favorite
+		pastOrder.setCrust(pastOrderServ.findById(pastOrder.getId()).get().getCrust()); // Converts PastOrder to cloned PastOrder, but it's a Favorite now
+		pastOrder.setSize(pastOrderServ.findById(pastOrder.getId()).get().getSize()); // There's a better way to do this, but I couldn't figure it out!
 		pastOrder.setDeliveryMethod(pastOrderServ.findById(pastOrder.getId()).get().getDeliveryMethod());
 		pastOrder.setQuantity(pastOrderServ.findById(pastOrder.getId()).get().getQuantity());
 		pastOrder.setCustomer((pastOrderServ.findById(pastOrder.getId()).get().getCustomer()));
-		pastOrderServ.savePastOrder(pastOrder);
+		pastOrderServ.savePastOrder(pastOrder); // Once Crust, Size, DeliveryMethod, Quantity and Customer is shared, it saves the PastOrder again, but with Fav = true.
 		
 		return "redirect:/account/{id}";
 	}
 	
-	@GetMapping("/craftapizza/favorite")
+	@GetMapping("/craftapizza/favorite") // Returns craftapizza_favorite.jsp, only if a favorite exists - the button is locked unless the User selects a favorite Pizza.
 	public String craftFavoritePizza(@ModelAttribute("favoritePizza") PizzaOrder favoritePizza, PastOrder thisPastOrder, Model model, HttpSession session) {
 		Long uid = (Long) session.getAttribute("userId");
 		if(uid == null) {
@@ -203,18 +206,19 @@ public class PizzaOrderController {
 		}
 		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size()); //shows number of orders in navbar
 		
-		for (int i = 0; i < pastOrderServ.findByUser(userServ.getById(uid)).size(); i++) {
-			thisPastOrder = pastOrderServ.findByUser(userServ.getById(uid)).get(i);
-			if (thisPastOrder.getFavorite() == true) {
-				favoritePizza.setDeliveryMethod(thisPastOrder.getDeliveryMethod());
-				favoritePizza.setQuantity(thisPastOrder.getQuantity());
+		for (int i = 0; i < pastOrderServ.findByUser(userServ.getById(uid)).size(); i++) { // run through the list of past orders
+			thisPastOrder = pastOrderServ.findByUser(userServ.getById(uid)).get(i); // grab one
+			if (thisPastOrder.getFavorite() == true) { // if the selected past order is grabbed -->
+				favoritePizza.setDeliveryMethod(thisPastOrder.getDeliveryMethod()); // start converting PastOrder BACK to a PizzaOrder
+				favoritePizza.setQuantity(thisPastOrder.getQuantity()); // It has to do this, because PizzaOrders are what the app operates on during creation
 				favoritePizza.setCrust(thisPastOrder.getCrust());
 				favoritePizza.setSize(thisPastOrder.getSize());
-				favoritePizza.setFavorite(true);
+				favoritePizza.setFavorite(true); // Set the PizzaOrder to true - which is normally impossible.
+				// Setting the PizzaOrder to true here allows it to be culled later, so it doesn't add the favorite order to the PastOrders all over again.
 			}
 		}
 
-		favoritePizza.setCustomer(userServ.getById(uid)); // Gets only PizzaOrder's by logged in user
+		favoritePizza.setCustomer(userServ.getById(uid)); // Sets Customer at the end of the logic, for later look ups
 
 		return "craftapizza_favorite.jsp";
 	}
