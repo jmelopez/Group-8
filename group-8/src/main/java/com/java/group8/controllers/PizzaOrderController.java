@@ -1,8 +1,5 @@
 package com.java.group8.controllers;
 
-import java.util.Iterator;
-import java.util.Optional;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.java.group8.models.PastOrder;
 import com.java.group8.models.PizzaOrder;
-import com.java.group8.models.User;
 import com.java.group8.services.PastOrderService;
 import com.java.group8.services.PizzaOrderService;
 import com.java.group8.services.UserService;
@@ -172,78 +168,31 @@ public class PizzaOrderController {
 
 	
 	@PutMapping("/favorite/{id}")
-	public String editNPC(@Valid @ModelAttribute("fav") PastOrder newFav, BindingResult result, @PathVariable Long id,
+	public String editNPC(@Valid @ModelAttribute("fav") PastOrder pastOrder, BindingResult result, Model model, @PathVariable Long id,
 			HttpSession session) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
 		
 		System.out.println("made it to put");
+		
+		System.out.println(pastOrderServ.findById(pastOrder.getId()).get().getCrust());
+		pastOrder.setFavorite(true);
+		
+		pastOrder.setCrust(pastOrderServ.findById(pastOrder.getId()).get().getCrust());
+		pastOrder.setSize(pastOrderServ.findById(pastOrder.getId()).get().getSize());
+		pastOrder.setDeliveryMethod(pastOrderServ.findById(pastOrder.getId()).get().getDeliveryMethod());
+		pastOrder.setQuantity(pastOrderServ.findById(pastOrder.getId()).get().getQuantity());
+		pastOrder.setCustomer((pastOrderServ.findById(pastOrder.getId()).get().getCustomer()));
+		
+		pastOrderServ.savePastOrder(pastOrder);
+		
 
 		return "redirect:/account/{id}";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	@GetMapping("/favorite/{id}")
-//	public String favorite(@PathVariable Long id, PastOrder favoriteOrder, HttpSession session, Model model) {
-//		Long uid = (Long) session.getAttribute("userId");
-//		if(uid == null) {
-//			return "error.jsp";
-//		} else  {
-//			model.addAttribute("user", userServ.getById(uid));
-//		}
-//		
-//		pastOrderServ.findByUser(userServ.getById(uid)).get(0).setFavorite(true);
-//		Optional<PastOrder> newFavorite = pastOrderServ.findById(id);
-//		
-//		
-//		for (int i = 0; i < pastOrderServ.findByUser(userServ.getById(uid)).size(); i++) {
-//			
-//			String deliveryMethod = pastOrderServ.findByUser(userServ.getById(uid)).get(i).getDeliveryMethod();
-//			String crust = pastOrderServ.findByUser(userServ.getById(uid)).get(i).getDeliveryMethod();
-//			String size = pastOrderServ.findByUser(userServ.getById(uid)).get(i).getDeliveryMethod();
-//			String deliveryMethod = pastOrderServ.findByUser(userServ.getById(uid)).get(i).getDeliveryMethod();
-//			
-//			pastOrderServ.findByUser(userServ.getById(uid)).get(i).setFavorite(true);
-//			pastOrderServ.findByUser(userServ.getById(uid)).get(i).setDe(true);
-////			pastOrderServ.savePastOrder(favoriteOrder);
-//		}
-//		
-//		System.out.println(pastOrderServ.findByUser(userServ.getById(uid)).size());
-//		
-//		newFavorite.get().setFavorite(true);
-//		System.out.println(newFavorite.get().getFavorite());
-//		newFavorite.get().setFavorite(false);
-//		System.out.println(newFavorite.get().getFavorite());
-//		
-//		
-//		
-//		return "redirect:/account/{id}";
-//	}
 	
 	
 }

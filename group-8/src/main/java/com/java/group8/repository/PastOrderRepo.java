@@ -14,5 +14,4 @@ public interface PastOrderRepo extends CrudRepository<PastOrder, Long> {
 	List<PastOrder> findByCustomer(User customer);
 	
 	Optional<PastOrder> findById(Long id);
-	
 }
