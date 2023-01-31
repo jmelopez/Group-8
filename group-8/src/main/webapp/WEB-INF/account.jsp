@@ -171,9 +171,7 @@
 								<form:form action="/favorite/${PastOrder.getId()}" method="POST" modelAttribute="fav">
 								<input type="hidden" name="_method" value="put">
 								<input type="submit" class="btn btn-primary col-2" value="Favorite" />
-								</form:form>
-										
-										
+								</form:form>	
 							</div>
 						</div>
 					</c:forEach>

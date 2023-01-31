@@ -56,7 +56,7 @@
 						<div class="card">
 							<div class="card-body">
 								<p class="card-text">Empty card</p>
-								<a href="#" class="btn btn-primary">RE-ORDER MY FAVE</a>
+								<a href="/craftapizza/favorite" class="btn btn-primary">RE-ORDER MY FAVE</a>
 							</div>
 						</div>
 					</div>

@@ -111,6 +111,7 @@ public class PizzaOrderController {
 		if (pizzaServ.findByUser(userServ.getById(uid)).size() >0) {
 			pizzaServ.DeletePizzaOrder(pizzaServ.findByUser(userServ.getById(uid)).get(0).getId()); // Ugly but it works, clears cart on checkout
 		}
+		
 		return "redirect:/home";
 	}
 	
@@ -129,8 +130,9 @@ public class PizzaOrderController {
 		
 		newRandomPizza.setCrust(randomCrust);
 		newRandomPizza.setSize(randomSize);
-		
+		newRandomPizza.setCustomer(userServ.getById(uid)); // Gets only PizzaOrder's by logged in user
 		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
+		
 		return "craftapizza_random.jsp";
 	}
 	
@@ -158,15 +160,11 @@ public class PizzaOrderController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
-		pastOrderServ.DeletePastOrder(id);
 		
+		pastOrderServ.DeletePastOrder(id);
 		return "redirect:/account/{id}";
 	}
-	
-	
 
-
-	
 	@PutMapping("/favorite/{id}")
 	public String editNPC(@Valid @ModelAttribute("fav") PastOrder pastOrder, BindingResult result, Model model, @PathVariable Long id,
 			HttpSession session) {
@@ -176,28 +174,46 @@ public class PizzaOrderController {
 		} else  {
 			model.addAttribute("user", userServ.getById(uid));
 		}
-		
-		
 		PastOrder thisPastOrder;
-
 		for (int i = 0; i < pastOrderServ.findByUser(userServ.getById(uid)).size(); i++) {
 			thisPastOrder = pastOrderServ.findByUser(userServ.getById(uid)).get(i);
 			thisPastOrder.setFavorite(false);
 		}
-		
-		System.out.println(pastOrderServ.findById(pastOrder.getId()).get().getCrust());
 		pastOrder.setFavorite(true);
 		pastOrder.setCrust(pastOrderServ.findById(pastOrder.getId()).get().getCrust());
 		pastOrder.setSize(pastOrderServ.findById(pastOrder.getId()).get().getSize());
 		pastOrder.setDeliveryMethod(pastOrderServ.findById(pastOrder.getId()).get().getDeliveryMethod());
 		pastOrder.setQuantity(pastOrderServ.findById(pastOrder.getId()).get().getQuantity());
 		pastOrder.setCustomer((pastOrderServ.findById(pastOrder.getId()).get().getCustomer()));
-		
 		pastOrderServ.savePastOrder(pastOrder);
 		
-
 		return "redirect:/account/{id}";
 	}
 	
-	
+	@GetMapping("/craftapizza/favorite")
+	public String craftFavoritePizza(@ModelAttribute("favoritePizza") PizzaOrder favoritePizza, PastOrder thisPastOrder, Model model, HttpSession session) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size()); //shows number of orders in navbar
+		
+		for (int i = 0; i < pastOrderServ.findByUser(userServ.getById(uid)).size(); i++) {
+			thisPastOrder = pastOrderServ.findByUser(userServ.getById(uid)).get(i);
+			if (thisPastOrder.getFavorite() == true) {
+				favoritePizza.setDeliveryMethod(thisPastOrder.getDeliveryMethod());
+				favoritePizza.setQuantity(thisPastOrder.getQuantity());
+				favoritePizza.setCrust(thisPastOrder.getCrust());
+				favoritePizza.setSize(thisPastOrder.getSize());
+				favoritePizza.setFavorite(true);
+			}
+		}
+
+		favoritePizza.setCustomer(userServ.getById(uid)); // Gets only PizzaOrder's by logged in user
+
+		return "craftapizza_favorite.jsp";
+	}
+
 }
