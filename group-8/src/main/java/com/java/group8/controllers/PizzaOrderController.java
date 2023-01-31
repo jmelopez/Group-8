@@ -177,11 +177,16 @@ public class PizzaOrderController {
 			model.addAttribute("user", userServ.getById(uid));
 		}
 		
-		System.out.println("made it to put");
+		
+		PastOrder thisPastOrder;
+
+		for (int i = 0; i < pastOrderServ.findByUser(userServ.getById(uid)).size(); i++) {
+			thisPastOrder = pastOrderServ.findByUser(userServ.getById(uid)).get(i);
+			thisPastOrder.setFavorite(false);
+		}
 		
 		System.out.println(pastOrderServ.findById(pastOrder.getId()).get().getCrust());
 		pastOrder.setFavorite(true);
-		
 		pastOrder.setCrust(pastOrderServ.findById(pastOrder.getId()).get().getCrust());
 		pastOrder.setSize(pastOrderServ.findById(pastOrder.getId()).get().getSize());
 		pastOrder.setDeliveryMethod(pastOrderServ.findById(pastOrder.getId()).get().getDeliveryMethod());
