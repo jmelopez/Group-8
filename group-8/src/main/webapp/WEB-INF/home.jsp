@@ -52,14 +52,22 @@
 							</div>
 						</div>
 					</div>
+					
 					<div class="col-12 col-md-6 col-lg-4">
 						<div class="card">
 							<div class="card-body">
 								<p class="card-text">Empty card</p>
-								<a href="/craftapizza/favorite" class="btn btn-primary">RE-ORDER MY FAVE</a>
+								<c:if test="${favorite == true}">
+									<a href="/craftapizza/favorite" class="btn btn-primary">RE-ORDER MY FAVE</a>
+								</c:if>
+								<c:if test="${!favorite}">
+									<a href="#" class="btn btn-primary">No Favorite Yet!</a>
+								</c:if>
+								
 							</div>
 						</div>
 					</div>
+					
 					<div class="col-12 col-md-6 col-lg-4">
 						<div class="card">
 							<div class="card-body">

@@ -2,6 +2,9 @@ package com.java.group8.controllers;
 
 
 
+import java.util.List;
+import java.util.ListIterator;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import com.java.group8.models.LoginUser;
+import com.java.group8.models.PastOrder;
 import com.java.group8.models.User;
 import com.java.group8.services.PastOrderService;
 import com.java.group8.services.PizzaOrderService;
@@ -93,6 +97,20 @@ public class MainController {
 			model.addAttribute("user", userServ.getById(uid));
 		}
 		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
+		
+		List<PastOrder> pastOrders = pastOrderServ.findByUser(userServ.getById(uid));
+		
+		model.addAttribute("favorite", false);
+		
+		ListIterator<PastOrder> it = pastOrders.listIterator();
+		
+		while (it.hasNext() ) {
+			if (it.next().getFavorite() == true) {
+				model.addAttribute("favorite", true);
+			}
+		}
+		
+		
 		return "home.jsp";
 	}
 	
