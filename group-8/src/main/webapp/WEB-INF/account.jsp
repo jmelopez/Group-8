@@ -166,7 +166,6 @@
 						            <a href="/deletePastOrder/${PastOrder.getId()}" class="btn btn-danger">Remove</a> 
 						            <a href="/favorite/${PastOrder.getId()}" class="btn btn-success">Set Favorite</a>
 						            </div> 
-
 								</div>
 							</div>
 						</div>

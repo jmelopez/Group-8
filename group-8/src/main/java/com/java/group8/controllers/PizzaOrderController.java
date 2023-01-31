@@ -1,5 +1,7 @@
 package com.java.group8.controllers;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -161,5 +163,28 @@ public class PizzaOrderController {
 		
 		return "redirect:/account/{id}";
 	}
+	
+	@GetMapping("/favorite/{id}")
+	public String favorite(@PathVariable Long id, PastOrder favoriteOrder, HttpSession session, Model model) {
+		Long uid = (Long) session.getAttribute("userId");
+		if(uid == null) {
+			return "error.jsp";
+		} else  {
+			model.addAttribute("user", userServ.getById(uid));
+		}
+		
+		pastOrderServ.findByUser(userServ.getById(uid)).get(0).setFavorite(true);
+		
+		Optional<PastOrder> newFavorite = pastOrderServ.findById(id);
+		newFavorite.get().setFavorite(true);
+		System.out.println(newFavorite.get().getFavorite());
+		newFavorite.get().setFavorite(false);
+		System.out.println(newFavorite.get().getFavorite());
+		
+		
+		
+		return "redirect:/account/{id}";
+	}
+	
 	
 }
