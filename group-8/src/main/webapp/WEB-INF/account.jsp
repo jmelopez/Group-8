@@ -154,19 +154,27 @@
 				</div>
 				<div class="flex-grow-1 p-3">
 					<h1>Past Orders</h1>
+
 					<c:forEach var="PastOrder" items="${pastOrders}">
-						<div class="card d-flex justify-content-center">
+						<div class="card">
 							<div class="card-body">
-								<div class="row d-flex justify-content-center">
-									<span class="d-md-table p-2 bd-highlight">Delivery Method: <c:out value="${PastOrder.deliveryMethod}"></c:out></span> 
-									<span class="d-md-table p-2 bd-highlight">Size: <c:out value="${PastOrder.size}"></c:out></span> 
-									<span class="d-md-table p-2 bd-highlight">Crust: <c:out value="${PastOrder.crust}"></c:out></span> 
-						            <span class="d-md-table p-2 bd-highlight">QTY: <c:out value="${PastOrder.quantity}"></c:out></span>
-						            <div class="row-1">
-						            <a href="/deletePastOrder/${PastOrder.getId()}" class="btn btn-danger">Remove</a> 
-						            <a href="/favorite/${PastOrder.getId()}" class="btn btn-success">Set Favorite</a>
-						            </div> 
-								</div>
+								<span class="d-md-table p-2 bd-highlight">Delivery
+									Method: <c:out value="${PastOrder.deliveryMethod}"></c:out> </span> 
+									<span class="d-md-table p-2 bd-highlight">Size: <c:out
+										value="${PastOrder.size}"></c:out></span> 
+										<span class="d-md-table p-2 bd-highlight">Crust: <c:out
+										value="${PastOrder.crust}"></c:out></span> 
+										<span class="d-md-table p-2 bd-highlight">QTY: <c:out
+										value="${PastOrder.quantity}"></c:out></span>
+										<a href="/deletePastOrder/${PastOrder.getId()}" class="btn btn-danger">Remove</a>
+										
+								<form:form action="/favorite/${PastOrder.getId()}" method="POST" modelAttribute="fav">
+								<input type="hidden" name="_method" value="put">
+										
+								<input type="submit" class="btn btn-primary col-2" value="Favorite" />
+								</form:form>
+										
+										
 							</div>
 						</div>
 					</c:forEach>
