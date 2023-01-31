@@ -52,7 +52,7 @@
 					</div>
 				</div>
 			</c:forEach>
-			<h4>Total Price: FREE! (add price later)</h4>
+			<h4>Total Price: $<c:out value="${totalPrice}"></c:out></h4>
 			
 			<form:form action="/checkout" method="POST" modelAttribute="checkoutOrder">
 				<input type="submit" class="btn btn-success col-sm-3" value="Checkout" />

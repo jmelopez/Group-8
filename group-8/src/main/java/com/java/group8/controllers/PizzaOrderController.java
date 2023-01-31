@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import com.java.group8.models.PastOrder;
+import com.java.group8.models.PizzaCalc;
 import com.java.group8.models.PizzaOrder;
 import com.java.group8.services.PastOrderService;
 import com.java.group8.services.PizzaOrderService;
@@ -73,12 +74,23 @@ public class PizzaOrderController {
 			model.addAttribute("user", userServ.getById(uid));
 		}
 		
-		model.addAttribute("currentOrders", pizzaServ.findByUser(userServ.getById(uid))); // Used for Navbar, displays # items in cart
-		Integer currentOrder = pizzaServ.findByUser(userServ.getById(uid)).size()-1; // Gets most recent order.
-
-		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());
+		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size());// Used for Navbar, displays # items in cart
 		
-		if (currentOrder >=0 ) { // Checks if there are any items in the cart
+		model.addAttribute("currentOrders", pizzaServ.findByUser(userServ.getById(uid))); 
+		Integer currentOrder = pizzaServ.findByUser(userServ.getById(uid)).size()-1; // Gets most recent order.
+		
+		Double totalPrice = 0.0;
+		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
+			PizzaOrder aPizza = pizzaServ.findByUser(userServ.getById(uid)).get(i);
+			PizzaCalc pizzaCalc = new PizzaCalc();
+			totalPrice += pizzaCalc.calculatePrice(aPizza.getDeliveryMethod(), aPizza.getSize(), aPizza.getCrust(),
+					aPizza.getQuantity(), userServ.getById(uid).getState());
+			
+		}
+
+		model.addAttribute("totalPrice", totalPrice);
+		
+		if (currentOrder >=0 ) {// Checks if there are any items in the cart
 			return "order.jsp"; // Returns order.jsp if at least 1 order exists
 		} else { // If the User has never ordered before:
 			return "redirect:/craftapizza"; // Returns them to the craftapizza.jsp, where they make a manual order.
@@ -222,5 +234,6 @@ public class PizzaOrderController {
 
 		return "craftapizza_favorite.jsp";
 	}
+
 
 }
