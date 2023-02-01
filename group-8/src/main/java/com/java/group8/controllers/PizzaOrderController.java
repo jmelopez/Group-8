@@ -82,9 +82,12 @@ public class PizzaOrderController {
 		Double totalPrice = 0.0;
 		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
 			PizzaOrder aPizza = pizzaServ.findByUser(userServ.getById(uid)).get(i);
-			PizzaCalc pizzaCalc = new PizzaCalc();
-			totalPrice += pizzaCalc.calculatePrice(aPizza.getDeliveryMethod(), aPizza.getSize(), aPizza.getCrust(),
-					aPizza.getQuantity(), userServ.getById(uid).getState());
+			PizzaCalc pizzaCalc = new PizzaCalc(aPizza, userServ.getById(uid).getState());
+
+			totalPrice += pizzaCalc.calculatePrice();
+			
+//			totalPrice += pizzaCalc.calculatePrice(aPizza.getDeliveryMethod(), aPizza.getSize(), aPizza.getCrust(),
+//					aPizza.getQuantity(), userServ.getById(uid).getState());
 			
 		}
 
