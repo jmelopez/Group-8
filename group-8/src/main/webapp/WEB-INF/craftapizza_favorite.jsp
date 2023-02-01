@@ -37,11 +37,10 @@
 		</nav>
 
 		<div class="content">
-			<h1>Reorder Your Favorite Pizza:</h1>
+			<h1 class="text-center">Reorder Your Favorite Pizza:</h1>
 
 			<form:form action="/craftapizza/new" method="POST" modelAttribute="favoritePizza">
-				<div class="card">
-					<div class="card-body">
+					<div class="card mx-auto text-center bg-warning m-4" style="width: 36rem">
 						<span class="d-md-table p-2 bd-highlight">Delivery Method: <c:out value="${favoritePizza.deliveryMethod}"></c:out> </span> 
 						<span class="d-md-table p-2 bd-highlight">Size: <c:out value="${favoritePizza.size}"></c:out></span> 
 						<span class="d-md-table p-2 bd-highlight">Crust: <c:out value="${favoritePizza.crust}"></c:out></span> 
@@ -51,10 +50,9 @@
 						<form:input type="hidden" path="crust" value="${favoritePizza.crust}" />
 						<form:input type="hidden" path="quantity" value="${favoritePizza.quantity}" />
 						<form:input type="hidden" path="favorite" value="true" />
+						<input type="submit" class="btn btn-primary col-sm-3 mx-auto m-2"
+							value="Add to Order" />
 					</div>
-				</div>
-				<input type="submit" class="btn btn-primary col-sm-3"
-					value="Add to Order" />
 			</form:form>
 		</div>
 	</div>

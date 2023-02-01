@@ -42,7 +42,8 @@
 					<div class="col-12 col-md-6 col-lg-4">
 						<div class="card">
 							<div class="card-body">
-								<p class="card-text">Empty card</p>
+								<img src="imgs/professional-pizza-photo.png" alt="photo of a delicious pizza" height="200px">
+								<p class="card-text mt-2">Click below to order a flat, open-faced baked pie of Italian origin consisting of a variety of bread doughs, topped with spiced tomato sauce and cheese,and garnished with your choice of toppings.</p>
 								<c:if test="${totalOrders > 0}">
 									<a href="/craftapizza" class="btn btn-primary">ADD TO ORDER</a>
 								</c:if>
@@ -56,7 +57,8 @@
 					<div class="col-12 col-md-6 col-lg-4">
 						<div class="card">
 							<div class="card-body">
-								<p class="card-text">Empty card</p>
+								<img src="imgs/favoritepizza.jpg" alt="pic of pepperoni pizza" height="200px">
+								<p class="card-text mt-2">Click below to re-order that one pizza that hits the spot every single time.</p>
 								<c:if test="${favorite == true}">
 									<a href="/craftapizza/favorite" class="btn btn-primary">RE-ORDER MY FAVE</a>
 								</c:if>
@@ -71,7 +73,8 @@
 					<div class="col-12 col-md-6 col-lg-4">
 						<div class="card">
 							<div class="card-body">
-								<p class="card-text">Empty card</p>
+								<img src="imgs/randopizza.jpg" src="pic of pesto pizza" height="200px" >
+								<p class="card-text mt-2">Are you feeling adventurous? Click below to order a random pizza! Great for parties and for a good dare!</p>
 								<a href="/craftapizza/random" class="btn btn-primary">SURPRISE ME</a>
 							</div>
 						</div>
