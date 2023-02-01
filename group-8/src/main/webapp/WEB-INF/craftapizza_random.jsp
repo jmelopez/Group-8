@@ -65,7 +65,53 @@
 					<form:option value="1">1</form:option>
 					<form:option value="2">2</form:option>
 					<form:option value="3">3</form:option>
+					
+					
+					<form:input type="hidden" path="hasPepperoni" value="${newRandomPizza.hasPepperoni}" />
+					<form:input type="hidden" path="hasSausage" value="${newRandomPizza.hasSausage}" />
+					<form:input type="hidden" path="hasMushrooms" value="${newRandomPizza.hasMushrooms}" />
+					<form:input type="hidden" path="hasExtraCheese" value="${newRandomPizza.hasExtraCheese}" />
+					<form:input type="hidden" path="hasOnions" value="${newRandomPizza.hasOnions}" />
+					<form:input type="hidden" path="hasAnchovies" value="${newRandomPizza.hasAnchovies}" />
+					<form:input type="hidden" path="hasEggplant" value="${newRandomPizza.hasEggplant}" />
+					<form:input type="hidden" path="hasArtichokes" value="${newRandomPizza.hasArtichokes}" />
+					<form:input type="hidden" path="hasBroccoli" value="${newRandomPizza.hasBroccoli}" />
+					<form:input type="hidden" path="hasPineApple" value="${newRandomPizza.hasPineApple}" />
 				</form:select>
+				
+					<div class=col>
+							<h5>Toppings</h5>
+							<c:if test="${newRandomPizza.hasPepperoni}">
+								<span>Pepperoni, </span>
+							</c:if>
+							<c:if test="${newRandomPizza.hasSausage}">
+								<span>Sausage, </span>
+							</c:if>
+							<c:if test="${newRandomPizza.hasMushrooms}">
+								<span>Mushrooms, </span>
+							</c:if>
+							<c:if test="${newRandomPizza.hasExtraCheese}">
+								<span>Extra Cheese, </span>
+							</c:if>
+							<c:if test="${newRandomPizza.hasOnions}">
+								<span>Onions, </span>
+							</c:if>
+							<c:if test="${newRandomPizza.hasAnchovies}">
+								<span>Anchovies, </span>
+							</c:if>
+							<c:if test="${newRandomPizza.hasEggplant}">
+								<span>Eggplant, </span>
+							</c:if>
+							<c:if test="${newRandomPizza.hasArtichokes}">
+								<span>Artichokes, </span>
+							</c:if>
+							<c:if test="${newRandomPizza.hasBroccoli}">
+								<span>Broccoli, </span>
+							</c:if>
+							<c:if test="${newRandomPizza.hasPineApple}">
+								<span>Pineapple, </span>
+							</c:if>
+						</div>
 
 				<form:input type="hidden" path="favorite" value="false" />
 				<input type="submit" class="btn btn-primary col-sm-3" value="Add to Order" />

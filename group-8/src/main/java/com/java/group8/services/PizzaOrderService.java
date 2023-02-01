@@ -40,6 +40,19 @@ public class PizzaOrderService {
 		randomPizza.setCrust(randomCrust);
 		randomPizza.setSize(randomSize);
 		
+		//Toppings:
+		randomPizza.setHasPepperoni(random.nextBoolean());
+		randomPizza.setHasSausage(random.nextBoolean());
+		randomPizza.setHasMushrooms(random.nextBoolean());
+		randomPizza.setHasExtraCheese(random.nextBoolean());
+		randomPizza.setHasOnions(random.nextBoolean());
+		randomPizza.setHasAnchovies(random.nextBoolean());
+		randomPizza.setHasEggplant(random.nextBoolean());
+		randomPizza.setHasArtichokes(random.nextBoolean());
+		randomPizza.setHasBroccoli(random.nextBoolean());
+		randomPizza.setHasPineApple(random.nextBoolean());
+		
+		
 		return randomPizza;
 	}
 	
