@@ -40,15 +40,17 @@
 			<c:forEach var="PizzaOrder" items="${currentOrders}">
 				<div class="card">
 					<div class="card-body">
-						<span class="d-md-table p-2 bd-highlight">Delivery Method:
-							<c:out value="${PizzaOrder.deliveryMethod}"></c:out>
-						</span> <span class="d-md-table p-2 bd-highlight">Size: <c:out
-								value="${PizzaOrder.size}"></c:out></span> <span
-							class="d-md-table p-2 bd-highlight">Crust: <c:out
-								value="${PizzaOrder.crust}"></c:out></span> <span
-							class="d-md-table p-2 bd-highlight">QTY: <c:out
-								value="${PizzaOrder.quantity}"></c:out></span> 
-								<a href="/deleteorder/${PizzaOrder.getId()}" class="btn btn-danger">Remove From Order</a>
+						<span class="d-md-table p-2 bd-highlight">Delivery Method: <c:out value="${PizzaOrder.deliveryMethod}"></c:out></span> 
+						<span class="d-md-table p-2 bd-highlight">Size: <c:out value="${PizzaOrder.size}"></c:out></span> 
+						<span class="d-md-table p-2 bd-highlight">Crust: <c:out value="${PizzaOrder.crust}"></c:out></span> 
+						<span class="d-md-table p-2 bd-highlight">QTY: <c:out value="${PizzaOrder.quantity}"></c:out></span> 
+						<h4>Toppings:</h4>
+						<c:if test="${PizzaOrder.hasPepperoni}">
+							<span>Pepperoni</span>
+						</c:if>
+						<div>
+						<a href="/deleteorder/${PizzaOrder.getId()}" class="btn btn-danger">Remove From Order</a>
+						</div>
 					</div>
 				</div>
 			</c:forEach>

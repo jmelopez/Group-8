@@ -114,6 +114,7 @@ public class PizzaOrderController {
 				pastOrder.setSize(pizzaOrder.getSize()); // Sets Size
 				pastOrder.setDeliveryMethod(pizzaOrder.getDeliveryMethod()); // Sets DeliveryMethod 
 				pastOrder.setQuantity(pizzaOrder.getQuantity()); // Sets Quantity
+				pastOrder.setHasPepperoni(pizzaOrder.getHasPepperoni());
 				pastOrder.setFavorite(false); // Sets favorite to false manually - this keeps it from saving favorite orders twice when checking out
 				pastOrder.setCustomer(userServ.getById(uid)); // Sets customer from PizzaOrder customer
 				pastOrderServ.savePastOrder(pastOrder); // Finally, once it's done converting PizzaOrder to a PastOrder, it saves the PastOrder

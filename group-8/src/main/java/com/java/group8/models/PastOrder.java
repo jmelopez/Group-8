@@ -34,6 +34,9 @@ public class PastOrder {
     
     @NotNull
     private Boolean favorite;
+    
+    @NotNull
+    private Boolean hasPepperoni;
 	
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -97,5 +100,15 @@ public class PastOrder {
 	public void setCustomer(User customer) {
 		this.customer = customer;
 	}
+
+	public Boolean getHasPepperoni() {
+		return hasPepperoni;
+	}
+
+	public void setHasPepperoni(Boolean hasPepperoni) {
+		this.hasPepperoni = hasPepperoni;
+	}
+	
+	
 
 }

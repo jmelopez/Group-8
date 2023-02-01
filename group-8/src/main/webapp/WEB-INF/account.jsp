@@ -158,20 +158,36 @@
 					<c:forEach var="PastOrder" items="${pastOrders}">
 						<div class="card">
 							<div class="card-body">
-								<span class="d-md-table p-2 bd-highlight">Delivery
-									Method: <c:out value="${PastOrder.deliveryMethod}"></c:out> </span> 
-									<span class="d-md-table p-2 bd-highlight">Size: <c:out
-										value="${PastOrder.size}"></c:out></span> 
-										<span class="d-md-table p-2 bd-highlight">Crust: <c:out
-										value="${PastOrder.crust}"></c:out></span> 
-										<span class="d-md-table p-2 bd-highlight">QTY: <c:out
-										value="${PastOrder.quantity}"></c:out></span>
-										<a href="/deletePastOrder/${PastOrder.getId()}" class="btn btn-danger">Remove</a>
-										
-								<form:form action="/favorite/${PastOrder.getId()}" method="POST" modelAttribute="fav">
-								<input type="hidden" name="_method" value="put">
-								<input type="submit" class="btn btn-primary col-2" value="Favorite" />
-								</form:form>	
+								<div class="row ">
+									<div class="col">
+										<span class="d-md-table p-2 bd-highlight">Delivery
+											Method: <c:out value="${PastOrder.deliveryMethod}"></c:out>
+										</span> <span class="d-md-table p-2 bd-highlight">Size: <c:out
+												value="${PastOrder.size}"></c:out></span> <span
+											class="d-md-table p-2 bd-highlight">Crust: <c:out
+												value="${PastOrder.crust}"></c:out></span> <span
+											class="d-md-table p-2 bd-highlight">QTY: <c:out
+												value="${PastOrder.quantity}"></c:out></span> <span
+											class="d-md-table p-2 bd-highlight">QTY: <c:out
+												value="${PastOrder.quantity}"></c:out></span>
+									</div>
+									<div class=col>
+										<h5>Toppings</h5>
+										<c:if test="${PastOrder.hasPepperoni}">
+											<span>Pepperoni, </span>
+										</c:if>
+									</div>
+								</div>
+
+								<a href="/deletePastOrder/${PastOrder.getId()}"
+									class="btn btn-danger">Remove</a>
+								<form:form action="/favorite/${PastOrder.getId()}" method="POST"
+									modelAttribute="fav">
+									<input type="hidden" name="_method" value="put">
+									<input type="submit" class="btn btn-primary col-2"
+										value="Favorite" />
+								</form:form>
+
 							</div>
 						</div>
 					</c:forEach>

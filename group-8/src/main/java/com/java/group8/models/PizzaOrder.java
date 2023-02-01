@@ -34,6 +34,9 @@ public class PizzaOrder {
     
     @NotNull
     private Boolean favorite;
+    
+    @NotNull
+    private Boolean hasPepperoni;
 
 	public PizzaOrder(Long id, @NotEmpty(message = "Must select a delivery option") String deliveryMethod,
 			@NotEmpty(message = "Select a Size") String size, @NotEmpty(message = "Select a Crust Type") String crust,
@@ -48,7 +51,7 @@ public class PizzaOrder {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User customer;
-	
+
 	public PizzaOrder() {
 	}
 
@@ -107,6 +110,13 @@ public class PizzaOrder {
 	public void setCustomer(User customer) {
 		this.customer = customer;
 	}
-	
+    
+	public Boolean getHasPepperoni() {
+		return hasPepperoni;
+	}
+
+	public void setHasPepperoni(Boolean hasPepperoni) {
+		this.hasPepperoni = hasPepperoni;
+	}
 	
 }

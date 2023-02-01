@@ -68,7 +68,7 @@
 						<form:option value="2">2</form:option>
 						<form:option value="3">3</form:option>
 					</form:select>
-
+					<form:input type="hidden" path="hasPepperoni" value="True" />
 					<form:input type="hidden" path="favorite" value="false" />
 					<input type="submit" class="btn btn-primary col-sm-3"
 						value="Add to Order" />
