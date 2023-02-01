@@ -36,40 +36,49 @@
 		</nav>
 
 		<div class="content">
-			<h1>Craft-A-Random-Pizza</h1>
+			<h1 class="text-center">Craft-A-Random-Pizza</h1>
+			<div class="col-3 mx-auto bg-dark text-light m-4 p-4">
+				<form:form action="/craftapizza/new" method="POST" modelAttribute="newRandomPizza">
+					<div class="form-group m-2">
+						<label>Delivery Type:</label>
+						<form:select path="deliveryMethod" class="form-select"
+							aria-label="Default select">
+							<form:option value="CarryOut">CarryOut</form:option>
+							<form:option value="Delivery">Delivery</form:option>
+						</form:select>
+					</div>
+					<div class="form-group m-2">
+						<label>Random Size:</label>
+						<form:select path="size" class="form-select"
+							aria-label="Default select">
+							<form:option value="Small">Small</form:option>
+							<form:option value="Medium">Medium</form:option>
+							<form:option value="Large">Large</form:option>
+						</form:select>
+					</div>
+					<div class="form-group m-2">
+						<label>Random Crust:</label>
+						<form:select path="crust" class="form-select"
+							aria-label="Default select">
+							<form:option value="Thick">Thick</form:option>
+							<form:option value="Thin">Thin</form:option>
+							<form:option value="Stuffed">Stuffed</form:option>
+						</form:select>
+					</div>
+					<div class="form-group m-2">
+						<label>QTY:</label>
+						<form:select path="quantity" class="form-select"
+							aria-label="Default select">
+							<form:option value="1">1</form:option>
+							<form:option value="2">2</form:option>
+							<form:option value="3">3</form:option>
+						</form:select>
+					</div>
 
-			<form:form action="/craftapizza/new" method="POST" modelAttribute="newRandomPizza">
-				<label>Delivery Type:</label>
-				<form:select path="deliveryMethod" class="form-select"
-					aria-label="Default select">
-					<form:option value="CarryOut">CarryOut</form:option>
-					<form:option value="Delivery">Delivery</form:option>
-				</form:select>
-				<label>Random Size:</label>
-				<form:select path="size" class="form-select"
-					aria-label="Default select">
-					<form:option value="Small">Small</form:option>
-					<form:option value="Medium">Medium</form:option>
-					<form:option value="Large">Large</form:option>
-				</form:select>
-				<label>Random Crust:</label>
-				<form:select path="crust" class="form-select"
-					aria-label="Default select">
-					<form:option value="Thick">Thick</form:option>
-					<form:option value="Thin">Thin</form:option>
-					<form:option value="Stuffed">Stuffed</form:option>
-				</form:select>
-				<label>QTY:</label>
-				<form:select path="quantity" class="form-select"
-					aria-label="Default select">
-					<form:option value="1">1</form:option>
-					<form:option value="2">2</form:option>
-					<form:option value="3">3</form:option>
-				</form:select>
-
-				<form:input type="hidden" path="favorite" value="false" />
-				<input type="submit" class="btn btn-primary col-sm-3" value="Add to Order" />
-			</form:form>
+					<form:input type="hidden" path="favorite" value="false" />
+					<input type="submit" class="btn btn-primary col-sm-5" value="Add to Order" />
+				</form:form>
+			</div>
 		</div>
 	</div>
 </body>
