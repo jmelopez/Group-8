@@ -1,6 +1,7 @@
 package com.java.group8.models;
 
 public class PizzaCalc {
+
     
 	public Double calculatePrice(String deliveryMethod, String size, String crust, Integer qty, String state) {
 		Double totalPrice = 0.0;

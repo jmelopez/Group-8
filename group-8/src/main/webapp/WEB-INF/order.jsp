@@ -45,15 +45,54 @@
 						<span class="d-md-table p-2 bd-highlight">Crust: <c:out value="${PizzaOrder.crust}"></c:out></span> 
 						<span class="d-md-table p-2 bd-highlight">QTY: <c:out value="${PizzaOrder.quantity}"></c:out></span> 
 						<h4>Toppings:</h4>
+						
 						<c:if test="${PizzaOrder.hasPepperoni}">
 							<span>Pepperoni</span>
 						</c:if>
+
+						<c:if test="${PizzaOrder.hasSausage}">
+							<span>Sausage</span>
+						</c:if>
+
+						<c:if test="${PizzaOrder.hasMushrooms}">
+							<span>Mushrooms</span>
+						</c:if>
+
+						<c:if test="${PizzaOrder.hasExtraCheese}">
+							<span>Extra Cheese</span>
+						</c:if>
+
+						<c:if test="${PizzaOrder.hasOnions}">
+							<span>Onions</span>
+						</c:if>
+
+						<c:if test="${PizzaOrder.hasAnchovies}">
+							<span>Anchovies</span>
+						</c:if>
+
+						<c:if test="${PizzaOrder.hasEggplant}">
+							<span>Eggplant</span>
+						</c:if>
+
+						<c:if test="${PizzaOrder.hasArtichokes}">
+							<span>Artichokes</span>
+						</c:if>
+
+						<c:if test="${PizzaOrder.hasBroccoli}">
+							<span>Broccoli</span>
+						</c:if>
+
+						<c:if test="${PizzaOrder.hasPineApple}">
+							<span>Pineapple</span>
+						</c:if>
+
 						<div>
 						<a href="/deleteorder/${PizzaOrder.getId()}" class="btn btn-danger">Remove From Order</a>
 						</div>
 					</div>
 				</div>
 			</c:forEach>
+			
 			<h4>Total Price: $<c:out value="${totalPrice}"></c:out></h4>
 			
 			<form:form action="/checkout" method="POST" modelAttribute="checkoutOrder">

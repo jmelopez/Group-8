@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.AssertFalse;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -37,16 +38,33 @@ public class PizzaOrder {
     
     @NotNull
     private Boolean hasPepperoni;
-
-	public PizzaOrder(Long id, @NotEmpty(message = "Must select a delivery option") String deliveryMethod,
-			@NotEmpty(message = "Select a Size") String size, @NotEmpty(message = "Select a Crust Type") String crust,
-			@NotEmpty(message = "Must select at least 1") Integer quantity, @NotNull Boolean favorite) {
-		this.deliveryMethod = deliveryMethod;
-		this.size = size;
-		this.crust = crust;
-		this.quantity = quantity;
-		this.favorite = favorite;
-	}
+    
+    @NotNull
+    private Boolean hasSausage;
+    
+    @NotNull
+    private Boolean hasMushrooms;
+    
+    @NotNull
+    private Boolean hasExtraCheese;
+    
+    @NotNull
+    private Boolean hasOnions;
+    
+    @NotNull
+    private Boolean hasAnchovies;
+    
+    @NotNull
+    private Boolean hasEggplant;
+    
+    @NotNull
+    private Boolean hasArtichokes;
+    
+    @NotNull
+    private Boolean hasBroccoli;
+    
+    @NotNull
+    private Boolean hasPineApple;
 	
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -118,5 +136,79 @@ public class PizzaOrder {
 	public void setHasPepperoni(Boolean hasPepperoni) {
 		this.hasPepperoni = hasPepperoni;
 	}
+
+	public Boolean getHasSausage() {
+		return hasSausage;
+	}
+
+	public void setHasSausage(Boolean hasSausage) {
+		this.hasSausage = hasSausage;
+	}
+
+	public Boolean getHasMushrooms() {
+		return hasMushrooms;
+	}
+
+	public void setHasMushrooms(Boolean hasMushrooms) {
+		this.hasMushrooms = hasMushrooms;
+	}
+
+	public Boolean getHasExtraCheese() {
+		return hasExtraCheese;
+	}
+
+	public void setHasExtraCheese(Boolean hasExtraCheese) {
+		this.hasExtraCheese = hasExtraCheese;
+	}
+
+	public Boolean getHasOnions() {
+		return hasOnions;
+	}
+
+	public void setHasOnions(Boolean hasOnions) {
+		this.hasOnions = hasOnions;
+	}
+
+	public Boolean getHasAnchovies() {
+		return hasAnchovies;
+	}
+
+	public void setHasAnchovies(Boolean hasAnchovies) {
+		this.hasAnchovies = hasAnchovies;
+	}
+
+	public Boolean getHasEggplant() {
+		return hasEggplant;
+	}
+
+	public void setHasEggplant(Boolean hasEggplant) {
+		this.hasEggplant = hasEggplant;
+	}
+
+	public Boolean getHasArtichokes() {
+		return hasArtichokes;
+	}
+
+	public void setHasArtichokes(Boolean hasArtichokes) {
+		this.hasArtichokes = hasArtichokes;
+	}
+
+	public Boolean getHasBroccoli() {
+		return hasBroccoli;
+	}
+
+	public void setHasBroccoli(Boolean hasBroccoli) {
+		this.hasBroccoli = hasBroccoli;
+	}
+
+	public Boolean getHasPineApple() {
+		return hasPineApple;
+	}
+
+	public void setHasPineApple(Boolean hasPineApple) {
+		this.hasPineApple = hasPineApple;
+	}
+	
+	
 	
 }

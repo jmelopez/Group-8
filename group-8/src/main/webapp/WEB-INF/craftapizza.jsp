@@ -37,7 +37,7 @@
 		</nav>
 
 		<div class="content">
-		<h1>Craft-A-Pizza</h1>
+			<h1>Craft-A-Pizza</h1>
 			<div class="col-3">
 				<form:form action="/craftapizza/new" method="POST"
 					modelAttribute="newPizzaOrder">
@@ -68,7 +68,37 @@
 						<form:option value="2">2</form:option>
 						<form:option value="3">3</form:option>
 					</form:select>
-					<form:input type="hidden" path="hasPepperoni" value="True" />
+
+					<form:label path="hasPepperoni">Pepperoni</form:label>
+					<form:checkbox path="hasPepperoni" value="true"/>
+					
+					<form:label path="hasSausage">Sausage</form:label>
+					<form:checkbox path="hasSausage" value="true"/>
+					
+					<form:label path="hasMushrooms">Mushrooms</form:label>
+					<form:checkbox path="hasMushrooms" value="true"/>
+					
+					<form:label path="hasExtraCheese">Extra Cheese</form:label>
+					<form:checkbox path="hasExtraCheese" value="true"/>
+					
+					<form:label path="hasOnions">Onions</form:label>
+					<form:checkbox path="hasOnions" value="true"/>
+					
+					<form:label path="hasAnchovies">Anchovies</form:label>
+					<form:checkbox path="hasAnchovies" value="true"/>
+					
+					<form:label path="hasEggplant">Eggplant</form:label>
+					<form:checkbox path="hasEggplant" value="true"/>
+					
+					<form:label path="hasArtichokes">Artichokes</form:label>
+					<form:checkbox path="hasArtichokes" value="true"/>
+					
+					<form:label path="hasBroccoli">Broccoli</form:label>
+					<form:checkbox path="hasBroccoli" value="true"/>
+					
+					<form:label path="hasPineApple">Pineapple</form:label>
+					<form:checkbox path="hasPineApple" value="true"/>
+
 					<form:input type="hidden" path="favorite" value="false" />
 					<input type="submit" class="btn btn-primary col-sm-3"
 						value="Add to Order" />
