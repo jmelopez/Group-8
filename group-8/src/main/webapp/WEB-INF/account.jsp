@@ -164,7 +164,6 @@
 										<span class="d-md-table p-2 bd-highlight">Size: <c:out value="${PastOrder.size}"></c:out></span>
 										<span class="d-md-table p-2 bd-highlight">Crust: <c:out value="${PastOrder.crust}"></c:out></span> 
 										<span class="d-md-table p-2 bd-highlight">QTY: <c:out value="${PastOrder.quantity}"></c:out></span> 
-										<span class="d-md-table p-2 bd-highlight">QTY: <c:out value="${PastOrder.quantity}"></c:out></span>
 									</div>
 									<div class=col>
 										<h5>Toppings</h5>
