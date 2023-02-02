@@ -82,9 +82,12 @@ public class PizzaOrderController {
 		Double totalPrice = 0.0;
 		for (int i=0; i < pizzaServ.findByUser(userServ.getById(uid)).size(); i++) {
 			PizzaOrder aPizza = pizzaServ.findByUser(userServ.getById(uid)).get(i);
-			PizzaCalc pizzaCalc = new PizzaCalc();
-			totalPrice += pizzaCalc.calculatePrice(aPizza.getDeliveryMethod(), aPizza.getSize(), aPizza.getCrust(),
-					aPizza.getQuantity(), userServ.getById(uid).getState());
+			PizzaCalc pizzaCalc = new PizzaCalc(aPizza, userServ.getById(uid).getState());
+
+			totalPrice += pizzaCalc.calculatePrice();
+			
+//			totalPrice += pizzaCalc.calculatePrice(aPizza.getDeliveryMethod(), aPizza.getSize(), aPizza.getCrust(),
+//					aPizza.getQuantity(), userServ.getById(uid).getState());
 			
 		}
 
@@ -116,6 +119,18 @@ public class PizzaOrderController {
 				pastOrder.setQuantity(pizzaOrder.getQuantity()); // Sets Quantity
 				pastOrder.setFavorite(false); // Sets favorite to false manually - this keeps it from saving favorite orders twice when checking out
 				pastOrder.setCustomer(userServ.getById(uid)); // Sets customer from PizzaOrder customer
+				//TOPPINGS:
+				pastOrder.setHasPepperoni(pizzaOrder.getHasPepperoni());
+				pastOrder.setHasSausage(pizzaOrder.getHasSausage());
+				pastOrder.setHasMushrooms(pizzaOrder.getHasMushrooms());
+				pastOrder.setHasExtraCheese(pizzaOrder.getHasExtraCheese());
+				pastOrder.setHasOnions(pizzaOrder.getHasOnions());
+				pastOrder.setHasAnchovies(pizzaOrder.getHasAnchovies());
+				pastOrder.setHasEggplant(pizzaOrder.getHasEggplant());
+				pastOrder.setHasBroccoli(pizzaOrder.getHasBroccoli());
+				pastOrder.setHasPineApple(pizzaOrder.getHasPineApple());
+				pastOrder.setHasArtichokes(pizzaOrder.getHasArtichokes());
+
 				pastOrderServ.savePastOrder(pastOrder); // Finally, once it's done converting PizzaOrder to a PastOrder, it saves the PastOrder
 			}
 		}
@@ -142,11 +157,20 @@ public class PizzaOrderController {
 		
 		model.addAttribute("totalOrders", pizzaServ.findByUser(userServ.getById(uid)).size()); // used for navbar, displays # items in cart
 		
-		String randomCrust = pizzaServ.createRandomPizzaOrder().getCrust(); //randomly generates a crust
-		String randomSize = pizzaServ.createRandomPizzaOrder().getSize(); // randomly generates a size
-		
-		newRandomPizza.setCrust(randomCrust); // sets random crust
-		newRandomPizza.setSize(randomSize); // sets random size
+		newRandomPizza.setCrust(pizzaServ.createRandomPizzaOrder().getCrust()); // sets random crust
+		newRandomPizza.setSize(pizzaServ.createRandomPizzaOrder().getSize()); // sets random size
+		//TOPPINGS:
+		newRandomPizza.setHasPepperoni(pizzaServ.createRandomPizzaOrder().getHasPepperoni());
+		newRandomPizza.setHasSausage(pizzaServ.createRandomPizzaOrder().getHasSausage());
+		newRandomPizza.setHasMushrooms(pizzaServ.createRandomPizzaOrder().getHasMushrooms());
+		newRandomPizza.setHasExtraCheese(pizzaServ.createRandomPizzaOrder().getHasExtraCheese());
+		newRandomPizza.setHasOnions(pizzaServ.createRandomPizzaOrder().getHasOnions());
+		newRandomPizza.setHasAnchovies(pizzaServ.createRandomPizzaOrder().getHasAnchovies());
+		newRandomPizza.setHasEggplant(pizzaServ.createRandomPizzaOrder().getHasEggplant());
+		newRandomPizza.setHasArtichokes(pizzaServ.createRandomPizzaOrder().getHasArtichokes());
+		newRandomPizza.setHasBroccoli(pizzaServ.createRandomPizzaOrder().getHasBroccoli());
+		newRandomPizza.setHasPineApple(pizzaServ.createRandomPizzaOrder().getHasPineApple());
+	
 		newRandomPizza.setCustomer(userServ.getById(uid)); // Sets Customer based on logged in UserID
 		
 		return "craftapizza_random.jsp";
@@ -203,6 +227,18 @@ public class PizzaOrderController {
 		pastOrder.setDeliveryMethod(pastOrderServ.findById(pastOrder.getId()).get().getDeliveryMethod());
 		pastOrder.setQuantity(pastOrderServ.findById(pastOrder.getId()).get().getQuantity());
 		pastOrder.setCustomer((pastOrderServ.findById(pastOrder.getId()).get().getCustomer()));
+		//Toppings:
+		pastOrder.setHasPepperoni(pastOrderServ.findById(pastOrder.getId()).get().getHasPepperoni());
+		pastOrder.setHasSausage(pastOrderServ.findById(pastOrder.getId()).get().getHasSausage());
+		pastOrder.setHasMushrooms(pastOrderServ.findById(pastOrder.getId()).get().getHasMushrooms());
+		pastOrder.setHasExtraCheese(pastOrderServ.findById(pastOrder.getId()).get().getHasExtraCheese());
+		pastOrder.setHasOnions(pastOrderServ.findById(pastOrder.getId()).get().getHasOnions());
+		pastOrder.setHasAnchovies(pastOrderServ.findById(pastOrder.getId()).get().getHasAnchovies());
+		pastOrder.setHasEggplant(pastOrderServ.findById(pastOrder.getId()).get().getHasEggplant());
+		pastOrder.setHasArtichokes(pastOrderServ.findById(pastOrder.getId()).get().getHasArtichokes());
+		pastOrder.setHasBroccoli(pastOrderServ.findById(pastOrder.getId()).get().getHasBroccoli());
+		pastOrder.setHasPineApple(pastOrderServ.findById(pastOrder.getId()).get().getHasPineApple());
+		
 		pastOrderServ.savePastOrder(pastOrder); // Once Crust, Size, DeliveryMethod, Quantity and Customer is shared, it saves the PastOrder again, but with Fav = true.
 		
 		return "redirect:/account/{id}";
@@ -226,6 +262,17 @@ public class PizzaOrderController {
 				favoritePizza.setCrust(thisPastOrder.getCrust());
 				favoritePizza.setSize(thisPastOrder.getSize());
 				favoritePizza.setFavorite(true); // Set the PizzaOrder to true - which is normally impossible.
+				//Toppings:
+				favoritePizza.setHasPepperoni(thisPastOrder.getHasPepperoni());
+				favoritePizza.setHasSausage(thisPastOrder.getHasSausage());
+				favoritePizza.setHasMushrooms(thisPastOrder.getHasMushrooms());
+				favoritePizza.setHasExtraCheese(thisPastOrder.getHasExtraCheese());
+				favoritePizza.setHasOnions(thisPastOrder.getHasOnions());
+				favoritePizza.setHasAnchovies(thisPastOrder.getHasAnchovies());
+				favoritePizza.setHasEggplant(thisPastOrder.getHasEggplant());
+				favoritePizza.setHasArtichokes(thisPastOrder.getHasArtichokes());
+				favoritePizza.setHasBroccoli(thisPastOrder.getHasBroccoli());
+				favoritePizza.setHasPineApple(thisPastOrder.getHasPineApple());
 				// Setting the PizzaOrder to true here allows it to be culled later, so it doesn't add the favorite order to the PastOrders all over again.
 			}
 		}

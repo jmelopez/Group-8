@@ -46,10 +46,58 @@
 						<span class="d-md-table p-2 bd-highlight">Size: <c:out value="${favoritePizza.size}"></c:out></span> 
 						<span class="d-md-table p-2 bd-highlight">Crust: <c:out value="${favoritePizza.crust}"></c:out></span> 
 						<span class="d-md-table p-2 bd-highlight">QTY: <c:out value="${favoritePizza.quantity}"></c:out></span>
+						<!-- TOPPINGS -->
+						<span class="d-md-table p-2 bd-highlight">QTY: <c:out value="${favoritePizza.quantity}"></c:out></span>
+						<div class=col>
+							<h5>Toppings</h5>
+							<c:if test="${favoritePizza.hasPepperoni}">
+								<span>Pepperoni, </span>
+							</c:if>
+							<c:if test="${favoritePizza.hasSausage}">
+								<span>Sausage, </span>
+							</c:if>
+							<c:if test="${favoritePizza.hasMushrooms}">
+								<span>Mushrooms, </span>
+							</c:if>
+							<c:if test="${favoritePizza.hasExtraCheese}">
+								<span>Extra Cheese, </span>
+							</c:if>
+							<c:if test="${favoritePizza.hasOnions}">
+								<span>Onions, </span>
+							</c:if>
+							<c:if test="${favoritePizza.hasAnchovies}">
+								<span>Anchovies, </span>
+							</c:if>
+							<c:if test="${favoritePizza.hasEggplant}">
+								<span>Eggplant, </span>
+							</c:if>
+							<c:if test="${favoritePizza.hasArtichokes}">
+								<span>Artichokes, </span>
+							</c:if>
+							<c:if test="${favoritePizza.hasBroccoli}">
+								<span>Broccoli, </span>
+							</c:if>
+							<c:if test="${favoritePizza.hasPineApple}">
+								<span>Pineapple, </span>
+							</c:if>
+						</div>
+						<!-- Convert PastOrder Favorite to New PizzaOrder -->
 						<form:input type="hidden" path="deliveryMethod" value="${favoritePizza.deliveryMethod}" />
 						<form:input type="hidden" path="size" value="${favoritePizza.size}" />
 						<form:input type="hidden" path="crust" value="${favoritePizza.crust}" />
 						<form:input type="hidden" path="quantity" value="${favoritePizza.quantity}" />
+						<!-- TOPPINGS: -->
+						<form:input type="hidden" path="hasPepperoni" value="${favoritePizza.hasPepperoni}" />
+						<form:input type="hidden" path="hasSausage" value="${favoritePizza.hasSausage}" />
+						<form:input type="hidden" path="hasMushrooms" value="${favoritePizza.hasMushrooms}" />
+						<form:input type="hidden" path="hasExtraCheese" value="${favoritePizza.hasExtraCheese}" />
+						<form:input type="hidden" path="hasOnions" value="${favoritePizza.hasOnions}" />
+						<form:input type="hidden" path="hasAnchovies" value="${favoritePizza.hasAnchovies}" />
+						<form:input type="hidden" path="hasEggplant" value="${favoritePizza.hasEggplant}" />
+						<form:input type="hidden" path="hasArtichokes" value="${favoritePizza.hasArtichokes}" />
+						<form:input type="hidden" path="hasBroccoli" value="${favoritePizza.hasBroccoli}" />
+						<form:input type="hidden" path="hasPineApple" value="${favoritePizza.hasPineApple}" />
+						
 						<form:input type="hidden" path="favorite" value="true" />
 					</div>
 				</div>
